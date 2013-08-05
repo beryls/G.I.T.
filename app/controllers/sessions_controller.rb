@@ -8,9 +8,9 @@ class SessionsController < ApplicationController
 												    },{
 												     :accept => :json
 												    });
-  	access_token = JSON.parse(result)
-  	auth_result = RestClient.get("https://api.github.com/user", {:params => {:access_token => access_token}})
-  	puts auth_result
+  	access_token = JSON.parse(result)['access_token']
+  	user = JSON.parse(RestClient.get("https://api.github.com/user", {:params => {:access_token => access_token}}))
+  	binding.pry
   	redirect_to :root
 	end
 
