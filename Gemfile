@@ -43,7 +43,12 @@ group :development, :test do
   gem 'meta_request'        # Supporting gem for Rails Panel (Google Chrome extension for Rails development).
                             # https://github.com/dejan/rails_panel/tree/master/meta_request
   gem 'rails-erd'           # Diagrams your models. NOTE! $ brew install graphviz
-                            # https://github.com/voormedia/rails-erd
+                            # https://github.com/voormedia/rails-erd 
+  gem 'dotenv'
+
+  gem 'dotenv-rails'
+
+
 end
 
 
