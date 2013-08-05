@@ -1,7 +1,11 @@
 GIT::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  get '/callback' => 'sessions#callback'
+  get '/callback' => 'users#callback'
+  get '/sessions/:id/create' => 'sessions#create', as: 'create_user_session'
+  get '/sessions/:id/destroy' => 'sessions#destroy', as: 'destroy_user_session'
+  get '/users/create' => 'users#create', as: 'create_user'
+
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
