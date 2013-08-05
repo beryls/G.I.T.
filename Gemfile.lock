@@ -126,6 +126,8 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     ruby-graphviz (1.0.9)
     sass (3.2.10)
     sass-rails (3.2.6)
@@ -168,6 +170,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 3.2.13)
   rails-erd
+  rest-client
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)

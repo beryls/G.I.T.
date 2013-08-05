@@ -48,6 +48,8 @@ group :development, :test do
 
   gem 'dotenv-rails'
 
+  gem 'rest-client'
+
 
 end
 
