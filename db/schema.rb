@@ -11,7 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805191943) do
+ActiveRecord::Schema.define(:version => 20130805210545) do
+
+  create_table "portfolios", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "portfolios_repos", :force => true do |t|
+    t.integer "portfolio_id"
+    t.integer "repo_id"
+  end
+
+  create_table "repos", :force => true do |t|
+    t.string   "name"
+    t.string   "html_url"
+    t.string   "collaborators_url"
+    t.string   "languages_url"
+    t.string   "homepage_url"
+    t.integer  "user_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
