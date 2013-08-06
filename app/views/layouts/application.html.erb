@@ -8,7 +8,13 @@
 </head>
 <body>
 <% if current_user %>
-	<p><%= link_to 'Logout', destroy_user_session_path(current_user.id) %> Logged in as: <%=current_user.name || current_user.login %></p>
+	<p><%= link_to 'Logout', destroy_user_session_path(current_user.id) %> Logged in as: 
+		<% if current_user.name && current_user.name.length > 0 %>
+			<%= current_user.name %>
+		<% else %>
+			<%= current_user.login %>
+		<% end %>
+	</p>
 <% else %>
 	<p><a href='https://github.com/login/oauth/authorize?client_id=<%=ENV["CLIENT_ID"]%>'>Click here</a> to begin!</body>
 <% end %>
