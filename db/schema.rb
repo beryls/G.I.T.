@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(:version => 20130806212138) do
   create_table "repos", :force => true do |t|
     t.string   "name"
     t.string   "html_url"
-    t.hstore   "collaborators"
     t.string   "homepage_url"
     t.hstore   "languages"
+    t.hstore   "collaborators"
     t.integer  "user_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
