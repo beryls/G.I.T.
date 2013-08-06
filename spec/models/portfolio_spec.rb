@@ -1,12 +1,22 @@
 require 'spec_helper'
 
 describe Portfolio do 
-	let(:portfolio) {Portfolio.new()}
+	let(:portfolio) {Portfolio.new(name:'port', description:'a test')}
 	let(:repo1) {Repo.new(name: 'clutch', html_url: 'http://clutch-app.herokuapp.com', collaborators_url: 'https://www.random.com', languages_url: 'https://api.github.com/repos/tcclevela/Clutch/languages', homepage_url: 'http://www.example.com')}
+	let(:repo2) {Repo.new(name: 'bean_fiend', html_url: 'http://bean-app.herokuapp.com', collaborators_url: 'https://www.random.com', languages_url: 'https://api.github.com/repos/tcclevela/Clutch/languages', homepage_url: 'http://www.example.com')}
 
-	describe 'linesOfCode' do 
-		it 'should return the total lines of code in a repo' do
-			puts portfolio
+	describe '.new' do 
+		it 'initialize a portfolio' do
+			expect(portfolio).to_not eq(nil)
+			expect(portfolio.name).to eq('port')
+			expect(portfolio.description).to eq('a test')
+		end
+	end
+
+	describe '#linesOfCode' do 
+		it 'should return the total lines of code in a portfolio' do
+			portfolio.repos << repo1
+			expect(portfolio.linesOfCode()).to eq(27443)
 		end
 	end
 end
