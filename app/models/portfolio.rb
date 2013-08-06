@@ -3,5 +3,8 @@ class Portfolio < ActiveRecord::Base
   belongs_to :user
   attr_accessible :name, :description
 
-  
+  def initialize(name)
+  	@name = name
+  end
+
 end
