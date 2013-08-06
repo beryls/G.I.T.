@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+port = Portfolio.create(name: "David Fisher", description: "Awesome Teacher")
+
+port.repos << Repo.create(name: "whatever", html_url: "http://4chan.org", collaborators_url: "http://redditt.com", languages_url: "http://github.com", homepage_url: "http://tibbon.github.com")
