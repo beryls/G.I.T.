@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 
-
 describe Repo do
   let(:repo1) {Repo.new(name: 'coaster_project', html_url: 'https://github.com/beryls/coaster_project', collaborators_url: 'https://api.github.com/repos/beryls/coaster_project/collaborators{/collaborator}', languages_url: 'https://api.github.com/repos/beryls/coaster_project/languages', homepage_url: 'http://www.example.com')}
 
