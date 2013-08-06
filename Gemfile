@@ -24,6 +24,8 @@ gem 'jquery-rails'
 
 group :development, :test do
 
+  gem 'rspec-rails', '~> 2.0'
+
   gem 'pg'
 
   gem 'pry-rails'           # Causes rails console to open pry

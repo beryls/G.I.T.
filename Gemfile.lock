@@ -55,6 +55,7 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    diff-lcs (1.2.4)
     dotenv (0.8.0)
     dotenv-rails (0.8.0)
       dotenv (= 0.8.0)
@@ -128,6 +129,17 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rspec-core (2.14.4)
+    rspec-expectations (2.14.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.14.2)
+    rspec-rails (2.14.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
     ruby-graphviz (1.0.9)
     sass (3.2.10)
     sass-rails (3.2.6)
@@ -171,6 +183,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   rails-erd
   rest-client
+  rspec-rails (~> 2.0)
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)
