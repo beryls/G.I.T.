@@ -1,10 +1,10 @@
 class Repo < ActiveRecord::Base
-	serialize :languages, ActiveRecord::Coders::Hstore
   serialize :collaborators, ActiveRecord::Coders::Hstore
+  serialize :languages, ActiveRecord::Coders::Hstore
 
   has_and_belongs_to_many :portfolios
   belongs_to :user
-  attr_accessible :name, :html_url, :collaborators_url, :languages_url, :homepage_url
+  attr_accessible :name, :html_url, :collabs, :languages, :homepage_url
 
   def self.updateOrCreate(info)
     if(Repo.find_by_html_url(info[:html_url]))
@@ -29,7 +29,7 @@ class Repo < ActiveRecord::Base
     return self.languages
   end
 
-  def collaborators
+  def collabs
   end
 
   def loadRepos

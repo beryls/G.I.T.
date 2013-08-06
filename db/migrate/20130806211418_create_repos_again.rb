@@ -4,8 +4,8 @@ class CreateReposAgain < ActiveRecord::Migration
       t.string :name
       t.string :html_url
       t.string :homepage_url
-      t.hstore :languages
       t.hstore :collaborators
+      t.hstore :languages
       t.references :user
       t.timestamps
     end
