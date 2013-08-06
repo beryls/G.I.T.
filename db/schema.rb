@@ -15,9 +15,10 @@ ActiveRecord::Schema.define(:version => 20130805210545) do
 
   create_table "portfolios", :force => true do |t|
     t.string   "name"
+    t.string   "description"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "portfolios_repos", :force => true do |t|

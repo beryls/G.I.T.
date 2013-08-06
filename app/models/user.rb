@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+	has_many :repos
+	has_many :portfolios
 	attr_accessible :name, :login, :email, :avatar_url, :access_token, :repos_count
 
 	def self.create_user(info)
@@ -11,5 +13,5 @@ class User < ActiveRecord::Base
 			return user
 
 		end
-	end	
+	end
 end
