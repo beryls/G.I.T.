@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Portfolio do 
 	let(:portfolio) {Portfolio.new(name:'port', description:'a test')}
 	let(:repo1) {Repo.new(name: 'clutch', html_url: 'http://clutch-app.herokuapp.com', collaborators_url: 'https://www.random.com', languages_url: 'https://api.github.com/repos/tcclevela/Clutch/languages', homepage_url: 'http://www.example.com')}
-	let(:repo2) {Repo.new(name: 'bean_fiend', html_url: 'http://bean-app.herokuapp.com', collaborators_url: 'https://www.random.com', languages_url: 'https://api.github.com/repos/tcclevela/Clutch/languages', homepage_url: 'http://www.example.com')}
+	let(:repo2) {Repo.new(name: 'bean_fiend', html_url: 'http://bean-app.herokuapp.com', collaborators_url: 'https://www.random.com', languages_url: 'https://api.github.com/repos/tcclevela/BeanFiend/languages', homepage_url: 'http://www.example.com')}
 
 	describe '.new' do 
 		it 'initialize a portfolio' do
@@ -15,8 +15,17 @@ describe Portfolio do
 
 	describe '#linesOfCode' do 
 		it 'should return the total lines of code in a portfolio' do
-			portfolio.repos << repo1
-			expect(portfolio.linesOfCode()).to eq(27443)
+			portfolio.repos << repo1 << repo2
+			expect(portfolio.linesOfCode()).to eq(184375)
+		end
+	end
+
+	describe '#linesOfCodeByLanguage' do
+		it 'should return a hash with language keys and line values' do
+			portfolio.repos << repo1 << repo2
+			expected_result = {'Ruby'=> 66865, 'JavaScript'=> 65588, 'CoffeeScript'=> 51922}
+			expect(portfolio.linesOfCodeByLanguage).to eq(expected_result)
+
 		end
 	end
 end
