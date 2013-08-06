@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Portfolio do 
 	let(:portfolio) {Portfolio.new(name:'port', description:'a test')}
-	let(:repo1) {Repo.new(name: 'clutch', html_url: 'http://clutch-app.herokuapp.com', collaborators_url: 'https://www.random.com', languages_url: 'https://api.github.com/repos/tcclevela/Clutch/languages', homepage_url: 'http://www.example.com')}
-	let(:repo2) {Repo.new(name: 'bean_fiend', html_url: 'http://bean-app.herokuapp.com', collaborators_url: 'https://www.random.com', languages_url: 'https://api.github.com/repos/tcclevela/BeanFiend/languages', homepage_url: 'http://www.example.com')}
+	let(:repo1) {Repo.new(name: 'clutch', html_url: 'http://clutch-app.herokuapp.com', collaborators: {'tcclevela' => 'http://www.github.com/users/tcclevela'}, languages:{'Ruby'=>2000,'JavaScript'=>2500,'CoffeeScript'=>2000}, homepage_url: 'http://www.example.com')}
+	let(:repo2) {Repo.new(name: 'bean_fiend', html_url: 'http://bean-app.herokuapp.com', collaborators: {'tcclevela' => 'http://www.github.com/users/tcclevela'}, languages: {"Ruby"=>1000, 'JavaScript'=>2500,'CoffeeScript'=>4000}, homepage_url: 'http://www.example.com')}
 
 	describe '.new' do 
 		it 'initialize a portfolio' do
