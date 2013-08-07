@@ -7,9 +7,7 @@ class Portfolio < ActiveRecord::Base
   def linesOfCode
   	totalLines = 0
   	self.repos.each do |repo|
-  		repo.languages.each do |language, lines|
-  			totalLines += lines
-  		end
+      totalLines += repo.linesOfCode
   	end
   	return totalLines
   end

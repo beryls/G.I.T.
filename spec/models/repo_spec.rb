@@ -5,6 +5,13 @@ describe Repo do
   let(:repo1) {Repo.new(name: 'clutch', html_url: 'http://clutch-app.herokuapp.com', collaborators: {'tcclevela' => 'http://www.github.com/users/tcclevela'}, languages:{'Ruby'=>2000,'JavaScript'=>2500,'CoffeeScript'=>2000}, homepage_url: 'http://www.example.com')}
   let(:repo2) {Repo.new(name: 'bean_fiend', html_url: 'http://bean-app.herokuapp.com', collaborators: {'tcclevela' => 'http://www.github.com/users/tcclevela'}, languages: {"Ruby"=>1000, 'JavaScript'=>2500,'CoffeeScript'=>4000}, homepage_url: 'http://www.example.com')}
 
+  describe '#new' do 
+    it 'should initialize a new repo object' do
+      expect(repo1).to_not eq(nil)
+    end
+  end
+
+
   describe ".new" do
     it "creates a repo object" do
       expect(repo1).to_not eq(nil)
@@ -32,9 +39,6 @@ describe Repo do
     end
   end
 
-  describe '#collaborators' do
-
-  end
 
   describe "#getLinesOfCodeByLanguage" do
     url = 'https://api.github.com/repos/tcclevela/Clutch/languages'
@@ -54,7 +58,7 @@ describe Repo do
   describe '#getCollaborators' do
     url = 'https://api.github.com/repos/tcclevela/Clutch/collaborators'
     it 'should return a hash of collaborators' do
-      repo1.getCollaborators(url)
+        repo1.getCollaborators(url)
       expect(repo1.collaborators.class).to eq(Hash)
     end
 
