@@ -10,21 +10,29 @@ class Portfolio < ActiveRecord::Base
   		repo.languages.each do |language, lines|
   			totalLines += lines
   		end
-
   	end
   	return totalLines
   end
 
-  # def linesOfCodeByLanguage
-  # 	totalLines = {}
-  # 	self.repos.each do |repo|	
-  # 		result = JSON.parse(RestClient.get(repo.languages_url),{params: {access_token: ENV['ACCESS_TOKEN']}})
-  # 		result.each do |language, lines|
-  # 			totalLines[language] ||= 0
-		# 		totalLines[language] += lines
-  # 		end
-  # 	end
-  # 	return totalLines 
-  # end
+  def linesOfCodeByLanguage
+  	linesByLanguage = {}
+  	self.repos.each do |repo|	
+  		repo.languages.each do |language, lines|
+  			linesByLanguage[language] ||= 0
+				linesByLanguage[language] += lines
+  		end
+  	end
+  	return linesByLanguage 
+  end
+
+  def percentageOfCodeByLanguage
+    linesByPercentage = {}
+    linesByLanguage = linesOfCodeByLanguage
+    totalLines = linesOfCode.to_f
+    linesByLanguage.each do |language, lines|
+      linesByPercentage[language] = (lines.to_f/totalLines*100).round(2)
+    end
+    return linesByPercentage
+  end
 end
 
