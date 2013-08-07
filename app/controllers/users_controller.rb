@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   		access_token: @@access_token, 
   		avatar_url: user['avatar_url'], 
   		repos_count: user['public_repos']}
-  	user = User.create_user(user_info)
+  	user = User.updateOrCreate(user_info)
   	redirect_to "/sessions/#{user.id}/create"
   	# decide whether or not to add repos at this time
 	end
