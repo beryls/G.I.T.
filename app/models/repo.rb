@@ -4,7 +4,8 @@ class Repo < ActiveRecord::Base
 
   has_and_belongs_to_many :portfolios
   belongs_to :user
-  attr_accessible :name, :html_url, :collabs, :languages, :homepage_url
+
+  attr_accessible :name, :html_url, :collaborators, :languages, :homepage_url
 
   def self.updateOrCreate(info)
     if(Repo.find_by_html_url(info[:html_url]))
