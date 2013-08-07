@@ -4,13 +4,15 @@
   <title>GIT</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <% if current_user %>
 	<p><%= link_to 'Logout', destroy_user_session_path(current_user.id) %> Logged in as: 
 		<% if current_user.name && current_user.name.length > 0 %>
-			<%= current_user.name %>
+			<%= current_user.name %> 
+			<p id = 'profile'>Profile</p>
 		<% else %>
 			<%= current_user.login %>
 		<% end %>

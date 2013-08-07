@@ -7,24 +7,23 @@ class User < ActiveRecord::Base
 		if(User.find_by_email(info[:email]))
 			user = User.find_by_email(info[:email])
 			user.update_attributes(info)
-			return user
 		else
 			user = User.create(info)
-			return user
 		end
+		user.loadRepos
+		return user
 	end
 
 
 	def loadRepos
 		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", params: {access_token: ENV['ACCESS_TOKEN']}))
 		result.each do |repo|
-			self.repos << Repo.new(name: repo['name'],
-												html_url: repo['html_url'],
-												homepage_url: repo['homepage_url'],
-												collaborators_url: repo['collaborators_url'].split('{')[0],
-												languages_url: repo['languages_url'])
-			repos.last.getLinesOfCodeByLanguage
-			repos.last.getCollaborators
+			info = {name: repo['name'],
+								html_url: repo['html_url'],
+								homepage_url: repo['homepage_url'],
+								collaborators_url: repo['collaborators_url'].split('{')[0],
+								languages_url: repo['languages_url']}
+			self.repos << Repo.updateOrCreate(info)
 		end
 		return self.repos
 	end
