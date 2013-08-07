@@ -26,4 +26,7 @@ class UsersController < ApplicationController
   	# decide whether or not to add repos at this time
 	end
 
+  def show
+    @user = User.find(params[:id]).to_json
+  end
 end
