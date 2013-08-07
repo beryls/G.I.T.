@@ -11,17 +11,18 @@ class Repo < ActiveRecord::Base
     if(Repo.find_by_html_url(info[:html_url]))
       repo = Repo.find_by_html_url(info[:html_url])
       repo.update_attributes(info)
-      return repo
     else
       repo = Repo.create(info)
-      return repo
     end
+      repo.getLinesOfCodeByLanguage
+      repo.getCollaborators
+      return repo
   end
 
   def linesOfCode
     total_lines = 0
     self.languages.each do |language, lines|
-      total_lines += lines
+      total_lines += lines.to_i
     end
     return total_lines
   end
