@@ -5,7 +5,7 @@ class Repo < ActiveRecord::Base
   has_and_belongs_to_many :portfolios
   belongs_to :user
 
-  attr_accessible :name, :html_url, :collaborators, :languages, :homepage_url
+  attr_accessible :name, :html_url, :collaborators, :languages, :collaborators_url, :languages_url, :homepage_url
 
   def self.updateOrCreate(info)
     if(Repo.find_by_html_url(info[:html_url]))
@@ -18,21 +18,38 @@ class Repo < ActiveRecord::Base
     end
   end
 
-  def linesOfCode()
-    return self.languages
-  end
-
-  def linesOfCodeByLanguage
-    return self.languages
+  def linesOfCode
+    total_lines = 0
+    self.languages.each do |language, lines|
+      total_lines += lines
+    end
+    return total_lines
   end
 
   def percentOfCodeByLanguage
-    return self.languages
+    percentByLanguage = {}
+    totalLines = linesOfCode.to_f
+    self.languages.each do |language, lines|
+      percentByLanguage[language] = (100*lines.to_f/totalLines).round(2)
+    end
+    return percentByLanguage
   end
 
-  def collabs
+  def getCollaborators(options = {})
+    collaborators = {}
+    result = JSON.parse(RestClient.get(options[:url] || self.collaborators_url, params: {access_token: ENV['ACCESS_TOKEN']}))
+    result.each do |collaborator|
+      collaborators[collaborator['login']] = collaborator['html_url']
+    end
+    self.collaborators = collaborators
   end
 
-  def loadRepos
+  def getLinesOfCodeByLanguage(options = {})
+    linesByLanguage = {}
+    result = JSON.parse(RestClient.get(options[:url] || self.languages_url, params: {access_token: ENV['ACCESS_TOKEN']}))
+    result.each do |language, lines|
+      linesByLanguage[language] = lines
+    end
+    self.languages = linesByLanguage
   end
 end
