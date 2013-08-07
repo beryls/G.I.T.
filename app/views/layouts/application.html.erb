@@ -9,16 +9,16 @@
 </head>
 <body>
 <% if current_user %>
-	<p><%= link_to 'Logout', destroy_user_session_path(current_user.id) %> Logged in as: 
+	<p><%= link_to 'Logout', destroy_user_session_path(current_user.id) %> Logged in as:</p>
 		<% if current_user.name && current_user.name.length > 0 %>
-			<%= current_user.name %> 
+			<p><%= current_user.name %></p>
 			<p id = 'profile'>Profile</p>
 		<% else %>
-			<%= current_user.login %>
+			<p><%= current_user.login %></p>
 		<% end %>
-	</p>
+
 <% else %>
-	<p><a href='https://github.com/login/oauth/authorize?client_id=<%=ENV["CLIENT_ID"]%>'>Click here</a> to begin!</body>
+	<p><a href='https://github.com/login/oauth/authorize?client_id=<%=ENV["CLIENT_ID"]%>'>Click here</a> to begin!</p>
 <% end %>
 <%= yield %>
 </body>
