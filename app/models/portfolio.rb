@@ -1,7 +1,10 @@
 class Portfolio < ActiveRecord::Base
+  # these establish relationships between portfolio and other models
   has_and_belongs_to_many :repos
   belongs_to :user
+  # allows for mass assignment of these attributes
   attr_accessible :name, :description
+  # allows for easy creation and returning of these attributes
   attr_accessor :name, :description
 
   def linesOfCode
@@ -14,13 +17,13 @@ class Portfolio < ActiveRecord::Base
 
   def linesOfCodeByLanguage
   	linesByLanguage = {}
-  	self.repos.each do |repo|	
+  	self.repos.each do |repo|
   		repo.languages.each do |language, lines|
   			linesByLanguage[language] ||= 0
 				linesByLanguage[language] += lines
   		end
   	end
-  	return linesByLanguage 
+  	return linesByLanguage
   end
 
   def percentageOfCodeByLanguage

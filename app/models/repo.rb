@@ -1,10 +1,14 @@
 class Repo < ActiveRecord::Base
+  # these take the data in collaborators and languages, and reduce them to a format the computer can read more easily
+  # serialization permits this data to be stored as a hash in the database
   serialize :collaborators, ActiveRecord::Coders::Hstore
   serialize :languages, ActiveRecord::Coders::Hstore
 
+  # these establish relationships between repo and other models
   has_and_belongs_to_many :portfolios
   belongs_to :user
 
+  # allows for mass assignment of these attributes
   attr_accessible :name, :html_url, :collaborators, :languages, :collaborators_url, :languages_url, :homepage_url
 
   def self.updateOrCreate(info)
