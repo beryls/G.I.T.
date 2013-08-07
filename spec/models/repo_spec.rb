@@ -12,13 +12,13 @@ describe Repo do
 
   describe "#linesOfCode" do
     it "returns a number" do
-      expect(repo1.linesOfCode.class).to eq ("Integer")
+      expect(repo1.linesOfCode.class).to eq("Integer")
     end
   end
 
   describe "#linesOfCodeByLanguage" do
     it "returns a hash" do
-      expect(repo1.linesOfCodeByLanguage.class).to eq ("Hash")
+      expect(repo1.linesOfCodeByLanguage.class).to eq("Hash")
     end
 
     it "returns numerical values for lines of code" do
