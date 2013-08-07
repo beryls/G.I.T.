@@ -2,9 +2,10 @@
 <html>
 <head>
   <title>GIT</title>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -12,7 +13,7 @@
 	<p><%= link_to 'Logout', destroy_user_session_path(current_user.id) %> Logged in as: 
 		<% if current_user.name && current_user.name.length > 0 %>
 			<%= current_user.name %> 
-			<p id = 'profile'>Profile</p>
+			<%= link_to 'Profile', user_path(current_user.id) %>
 		<% else %>
 			<%= current_user.login %>
 		<% end %>
@@ -20,6 +21,7 @@
 <% else %>
 	<p><a href='https://github.com/login/oauth/authorize?client_id=<%=ENV["CLIENT_ID"]%>'>Click here</a> to begin!</body>
 <% end %>
+<div id = "canvas_container"></div>
 <%= yield %>
 </body>
 </html>

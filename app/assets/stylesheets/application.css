@@ -11,3 +11,9 @@
  *= require_self
  *= require_tree .
  */
+
+#canvas_container {
+	height: 700px;
+	width: 1000px;
+	border: 2px solid black;
+}
