@@ -18,21 +18,28 @@ class Repo < ActiveRecord::Base
     end
   end
 
-  def linesOfCode()
-    return self.languages
-  end
-
-  def linesOfCodeByLanguage
-    return self.languages
+  def linesOfCode
+    total_lines = 0
+    self.languages.each do |language, lines|
+      total_lines += lines
+    end
+    return total_lines
   end
 
   def percentOfCodeByLanguage
-    return self.languages
+    percentByLanguage = {}
+    totalLines = linesOfCode.to_f
+    self.languages.each do |language, lines|
+      percentByLanguage[language] = (100*lines.to_f/totalLines).round(2)
+    end
+    return percentByLanguage
   end
 
-  def collabs
+  def getCollaborators(url)
+    result = RestClient.get(url, params: {access_token: ENV['ACCESS_TOKEN']})
   end
 
-  def loadRepos
+  def getLinesOfCodeByLanguage(url)
+
   end
 end
