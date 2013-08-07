@@ -27,6 +27,8 @@ class UsersController < ApplicationController
 	end
 
   def show
-    @user = User.find(params[:id]).to_json
+    @user = User.find(params[:id])
+    @repos = @user.repos.to_json.html_safe
+    @user = @user.to_json.html_safe
   end
 end
