@@ -13,9 +13,17 @@ describe User do
 
 	describe 'loadRepos' do
 		it 'should load a users repos into database' do
-			puts user.login
 			repos = user.loadRepos
-			expect(repos.count).to eq(30)
+			expect(user.repos.count).to eq(30)
+		end
+	end
+
+	#will surely fail tomorrow
+	describe '#linesOfCode' do 
+		it 'should return the user"s total lines of code written in his or her repos (owned)' do
+			user.loadRepos
+			lines = user.linesOfCode
+			expect(lines).to eq(54466)
 		end
 	end
 end
