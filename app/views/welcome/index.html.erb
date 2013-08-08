@@ -13,6 +13,8 @@
     <h3>No results returned.</h3>
   <% else %>
     <p>Search results for: <%= @search %></p>
-    <p><%= @results %></p>
+    <% @results["users"].each do |result| %>
+      <p><%= result %></p>
+    <% end %>
   <% end %>
 <% end %>
