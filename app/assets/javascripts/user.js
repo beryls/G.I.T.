@@ -24,6 +24,7 @@ function renderUserProfile(user_json, repos_json) {
 		.data(repos)
 		.enter()
 		.append('rect')
+		.attr('rx', 5)
 		.attr('x', function(d, i){
 			return (i % 10) * square;
 		})
@@ -32,7 +33,10 @@ function renderUserProfile(user_json, repos_json) {
 		})
 		.attr('height', 55)
 		.attr('width', 55)
-		.attr('fill', 'black')
+		.attr('fill', function(d, i) {
+			console.log(d.main_language)
+			return repoColor(d.main_language);
+		})
 		.on('mouseenter', function(d) {
 			d3.select(this)
 				.transition()

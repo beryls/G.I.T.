@@ -23,7 +23,8 @@ class User < ActiveRecord::Base
 								html_url: repo['html_url'],
 								homepage_url: repo['homepage_url'],
 								collaborators_url: repo['collaborators_url'].split('{')[0],
-								languages_url: repo['languages_url']}
+								languages_url: repo['languages_url'],
+								main_language: repo['language']}
 			self.repos << Repo.updateOrCreate(info)
 		end
 		return self.repos

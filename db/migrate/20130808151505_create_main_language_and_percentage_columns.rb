@@ -1,11 +1,11 @@
 class CreateMainLanguageAndPercentageColumns < ActiveRecord::Migration
   def up
-  	add_column :repos, :percentLanguages, :hstore
-  	add_column :repos, :mainLanguage, :string
+  	add_column :repos, :percent_languages, :hstore
+  	add_column :repos, :main_language, :string
   end
 
   def down
-  	drop_column :repos, :percentLanguages, :hstore
-  	drop_column :repos, :mainLanguage, :string
+  	remove_column :repos, :percentLanguages, :hstore
+		remove_column :repos, :mainLanguage, :string
   end
 end
