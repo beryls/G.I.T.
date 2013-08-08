@@ -25,7 +25,9 @@ class User < ActiveRecord::Base
 								collaborators_url: repo['collaborators_url'].split('{')[0],
 								languages_url: repo['languages_url'],
 								main_language: repo['language']}
-			self.repos << Repo.updateOrCreate(info)
+			if info[:main_language]
+				self.repos << Repo.updateOrCreate(info)
+			end
 		end
 		return self.repos
 	end

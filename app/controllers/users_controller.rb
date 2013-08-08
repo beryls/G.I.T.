@@ -28,7 +28,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @repos = @user.repos
+    @repos.sort! {|a,b| a.main_language <=> b.main_language}
     @repos = @user.repos.to_json.html_safe
     @user = @user.to_json.html_safe
+
   end
 end
