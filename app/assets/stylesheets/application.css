@@ -23,3 +23,7 @@ line.link {
   stroke: #9ecae1;
   stroke-width: 1.5px;
 }
+
+html {
+	font-family: 'Roboto Condensed', sans-serif;
+}

@@ -4,9 +4,20 @@ function generateStringColor(string) {
 			string += 'ax';
 		}
 	}
-	return 'rgb(' + Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 3 +
-					"," + Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 4 +
-					"," + Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 5+ ")";
+	var r = Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 4;
+	var g = Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 4;
+	var b = Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 4;
+	colors = [r,b,g];
+	colors = _.map(colors, function(value) {
+		if(value > 150) {
+			return 150;
+		} else if (value === 0) {
+			return 100;
+		}
+		return value;
+	});
+	console.log(colors);
+	return "rgb(" + colors[0] + ',' + colors[1] + ',' + colors[2] + ')';
 }
 
 function generateStringHover(string) {
@@ -15,7 +26,18 @@ function generateStringHover(string) {
 			string += 'ax';
 		}
 	}
-	return 'rgb(' + Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 4 +
-					"," + Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 5 +
-					"," + Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 6+ ")";
+	var r = Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 2;
+	var g = Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 2;
+	var b = Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 2;
+	colors = [r,b,g];
+	colors = _.map(colors, function(value) {
+		if(value > 150) {
+			return 150;
+		} else if (value === 0) {
+			return 100;
+		}
+		return value;
+	});
+	console.log(colors);
+	return "rgb(" + colors[0] + ',' + colors[1] + ',' + colors[2] + ')';
 }

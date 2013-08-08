@@ -25,7 +25,7 @@ function renderRepoGrid(repos) {
 		.data(repos)
 		.enter()
 		.append('rect')
-		.attr('rx', 5)
+		.attr('rx', 3)
 		.attr('x', function(d, i){
 			return (i % 10) * square;
 		})
@@ -41,7 +41,7 @@ function renderRepoGrid(repos) {
 			d3.select(this)
 				.transition()
 				.duration(400)
-				.attr('rx', 100)
+				.attr('rx', 20)
 				.attr('fill', function(d) {
 					return repoHover(d.main_language);
 				});
@@ -50,7 +50,7 @@ function renderRepoGrid(repos) {
 			d3.select(this)
 				.transition()
 				.duration(200)
-				.attr('rx', 5)
+				.attr('rx', 3)
 				.attr('fill', function(d) {
 					return repoColor(d.main_language);
 				});

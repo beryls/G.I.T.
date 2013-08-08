@@ -1,10 +1,12 @@
 function renderUserProfile(user_json, repos_json) {
 
-	var user = [],repos;
-	user[0] = $.parseJSON(user_json);
-	repos = filterRepos($.parseJSON(repos_json));
-	color = generateStringColor(user[0].name);
-	hover = generateStringHover(user[0].name);
+
+	var user = $.parseJSON(user_json);
+	var repos = filterRepos($.parseJSON(repos_json));
+	var color = '#ae5325';
+	var hover = '#df6a30';
+
+	console.log(color);
 
 	var square = 60;
 
@@ -34,6 +36,14 @@ function renderUserProfile(user_json, repos_json) {
 				.duration(400)
 				.attr('fill', color);
 			});
+
+		profile.append('text')
+			.text(user.name)
+			.attr('stroke', 'black')
+			.attr('x', 100)
+			.attr('y', 40)
+			.attr('text-anchor', 'middle')
+			.attr('font-size', 25);
 
 	renderRepoGrid(repos);
 
