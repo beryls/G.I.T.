@@ -20,7 +20,6 @@ class Repo < ActiveRecord::Base
       repo = Repo.create(info)
     end
       repo.getLinesOfCodeByLanguage
-      # repo.percentOfCodeByLanguage
       repo.getCollaborators
       return repo
   end

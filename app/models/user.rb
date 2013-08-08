@@ -16,24 +16,30 @@ class User < ActiveRecord::Base
 
 
 	def loadRepos
-		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos",
-			params: {access_token: ENV['ACCESS_TOKEN'], page: 1, per_page: 100}))
-		result.each do |repo|
-			info = {name: repo['name'],
-								html_url: repo['html_url'],
-								homepage_url: repo['homepage_url'],
-								collaborators_url: repo['collaborators_url'].split('{')[0],
-								languages_url: repo['languages_url'],
-								main_language: repo['language']}
-			if info[:main_language]
-				self.repos << Repo.updateOrCreate(info)
+		result = Rails.cache.fetch("loadRepos-user-#{self.id}", expires_in: 1.hour) do
+			JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos",
+				params: {access_token: ENV['ACCESS_TOKEN'], page: 1, per_page: 100}))
+		end
+		Rails.cache.fetch("update-user-repos-#{self.id}", expires_in: 1.hour) do
+			result.each do |repo|
+				info = {name: repo['name'],
+									html_url: repo['html_url'],
+									homepage_url: repo['homepage_url'],
+									collaborators_url: repo['collaborators_url'].split('{')[0],
+									languages_url: repo['languages_url'],
+									main_language: repo['language']}
+				if info[:main_language]
+					self.repos << Repo.updateOrCreate(info)
+				end
 			end
 		end
 		return self.repos
 	end
 
 	def linesOfCode
-		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", params: {access_token: ENV['ACCESS_TOKEN']}))
+		result = Rails.cache.fetch("linesOfCode-user-#{self.id}", expires_in: 1.hour) do
+			JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", params: {access_token: ENV['ACCESS_TOKEN']}))
+		end
 		total_lines = 0
 		result.each do |repo|
 			languages = JSON.parse(RestClient.get(repo['languages_url']))

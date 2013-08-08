@@ -1,4 +1,12 @@
 GIT::Application.configure do
+
+  # For Rack Cache and Redis
+
+  config.action_dispatch.rack_cache = {
+    metastore:   "redis://localhost:6379/1/metastore",
+    entitystore: "redis://localhost:6379/1/entitystore"
+  }
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on

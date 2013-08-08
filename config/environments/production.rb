@@ -1,6 +1,11 @@
 GIT::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  config.action_dispatch.rack_cache = {
+    metastore:   "redis://localhost:6379/1/metastore",
+    entitystore: "redis://localhost:6379/1/entitystore"
+  }
+  
   # Code is not reloaded between requests
   config.cache_classes = true
 

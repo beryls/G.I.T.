@@ -6,7 +6,7 @@ function renderUserProfile(user_json, repos_json) {
 	var square = 60;
 
 	renderProfileBox(user);
-	renderRepoGrid(repos);
+	Repo.renderRepoGrid(repos);
 
 }
 
