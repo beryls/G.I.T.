@@ -25,9 +25,10 @@ var Repo = {
 			})
 			.transition()
 			.delay(function(d, i){
-				return i * 40;
+				return i * 15;
 			})
-			.duration(300)
+			.duration(200)
+			.ease('linear')
 			.attr('height', 55)
 			.each('end', function() {
 				d3.select(this).on('mouseenter', function(d) {
