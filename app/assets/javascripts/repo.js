@@ -68,15 +68,6 @@ function renderRepoGrid(repos) {
 
 	}
 
-function filterRepos(list) {
-	var cleanRepos = _.reject(list, function(repo) {
-		if(!repo.main_language) {
-			return repo;
-		}
-	});
-	return cleanRepos;
-}
-
 function repoColor(lang) {
 	if(lang === "Ruby") {return '#722124';}
 	if(lang === 'JavaScript') {return '#3aa0a0';}

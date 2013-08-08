@@ -1,7 +1,7 @@
 function renderUserProfile(user_json, repos_json) {
 
 	var user = $.parseJSON(user_json);
-	var repos = filterRepos($.parseJSON(repos_json));
+	var repos = $.parseJSON(repos_json);
 
 	var square = 60;
 
@@ -20,7 +20,7 @@ function renderProfileBox(user) {
 		} else {
 			return user['login'];
 		}
-	}
+	};
 
 	$('<div>')
 			.attr('id', 'profile_box')
