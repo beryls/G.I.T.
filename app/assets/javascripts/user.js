@@ -38,7 +38,7 @@ var User = {
 			.attr('height', 0)
 			.attr('width', 200)
 			.transition()
-			.duration(600)
+			.duration(1250)
 			.attr('height', 200)
 			.attr('fill', color)
 			.each('end', function(){
@@ -66,7 +66,7 @@ var User = {
 			.attr('text-anchor', 'middle')
 			.attr('font-size', 25)
 			.transition()
-			.duration(600)
+			.duration(1250)
 			.attr('opacity', 1)
 			.attr('y', 50);
 		profile.append('text')
@@ -78,7 +78,7 @@ var User = {
 			.attr('text-anchor', 'middle')
 			.attr('font-size', 20)
 			.transition()
-			.duration(600)
+			.duration(1250)
 			.attr('opacity', 1)
 			.attr('y', 80);
 	},
