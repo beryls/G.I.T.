@@ -72,7 +72,7 @@ function repoColor(lang) {
 	if(lang === 'JavaScript') {return '#3aa0a0';}
 	if(lang === 'C++') {return '#624588';}
 	else {
-		return generateColor(lang);
+		return generateStringColor(lang);
 	}
 }
 
@@ -81,28 +81,7 @@ function repoHover(lang) {
 	if(lang === 'JavaScript') {return '#47c4c4';}
 	if(lang === 'C++') {return '#8e65c5';}
 	else {
-		return generateHover(lang);
+		return generateStringHover(lang);
 	}
 }
 
-function generateColor(lang) {
-	if (lang.length < 6) {
-		while(lang.length < 6) {
-			lang += 'ax';
-		}
-	}
-	return 'rgb(' + Math.abs(lang[0].charCodeAt(0) - lang[1].charCodeAt(0)) * 3 +
-					"," + Math.abs(lang[2].charCodeAt(0) - lang[3].charCodeAt(0)) * 4 +
-					"," + Math.abs(lang[4].charCodeAt(0) - lang[5].charCodeAt(0)) * 5+ ")";
-}
-
-function generateHover(lang) {
-	if (lang.length < 6) {
-		while(lang.length < 6) {
-			lang += 'ax';
-		}
-	}
-	return 'rgb(' + Math.abs(lang[0].charCodeAt(0) - lang[1].charCodeAt(0)) * 4 +
-					"," + Math.abs(lang[2].charCodeAt(0) - lang[3].charCodeAt(0)) * 5 +
-					"," + Math.abs(lang[4].charCodeAt(0) - lang[5].charCodeAt(0)) * 6+ ")";
-}
