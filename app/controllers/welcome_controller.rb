@@ -14,13 +14,16 @@ class WelcomeController < ApplicationController
   def select
     login = params[:login]
     @@access_token = current_user.access_token
-    user = JSON.parse(RestClient.get("https://api.github.com/users/#{login}", {:params => {:access_token => @@access_token}}))
-    user_info = {name: user['name'],
-      login: user['login'],
-      email: user['email'],
-      avatar_url: user['avatar_url'],
-      repos_count: user['public_repos']}
-    user = User.updateOrCreate(user_info)
+    user = User.find_by_login(params[:login])
+    if user.nil?
+      user = JSON.parse(RestClient.get("https://api.github.com/users/#{login}", {:params => {:access_token => @@access_token}}))
+      user_info = {name: user['name'],
+        login: user['login'],
+        email: user['email'],
+        avatar_url: user['avatar_url'],
+        repos_count: user['public_repos']}
+      user = User.updateOrCreate(user_info)
+    end
     redirect_to "/users/#{user.id}"
   end
 
