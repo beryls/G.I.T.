@@ -16,8 +16,8 @@ function renderRepoGridCanvas(h,w) {
 function renderRepoGrid(repos) {
 
 	var square = 60;
-	var h = parseInt(repos.length / 10 + 1) * square;
-	var w = 600;
+	var h = parseInt(repos.length / 15 + 1) * square;
+	var w = 15 * 60;
 
 	svg = renderRepoGridCanvas(h,w);
 
@@ -25,40 +25,50 @@ function renderRepoGrid(repos) {
 		.data(repos)
 		.enter()
 		.append('rect')
-		.attr('rx', 5)
+		.attr('rx', 3)
 		.attr('x', function(d, i){
-			return (i % 10) * square;
+			return (i % 15) * square;
 		})
 		.attr('y', function(d, i){
-			return (parseInt(i / 10) * square);
+			return parseInt(i / 15) * square;
 		})
-		.attr('height', 55)
+		.attr('height', 0)
 		.attr('width', 55)
+		.attr('opacity', 0)
 		.attr('fill', function(d, i) {
 			return repoColor(d.main_language);
 		})
-		.on('mouseenter', function(d) {
-			d3.select(this)
-				.transition()
-				.duration(400)
-				.attr('rx', 100)
-				.attr('fill', function(d) {
-					return repoHover(d.main_language);
-				});
-		})
-		.on('mouseleave', function(d, i) {
-			d3.select(this)
-				.transition()
-				.duration(200)
-				.attr('rx', 5)
-				.attr('fill', function(d) {
-					return repoColor(d.main_language);
-				});
+		.transition()
+		.duration(1250)
+		.attr('height', 55)
+		.attr('opacity', 1)
+		.each('end', function() {
+			d3.select(this).on('mouseenter', function(d) {
+				d3.select(this)
+					.transition()
+					.duration(400)
+					
+					.attr('fill', function(d) {
+						return repoHover(d.main_language);
+					})
+					.transition()
+					.duration(600)
+					.attr('rx', 25);
+			})
+			.on('mouseleave', function(d, i) {
+				d3.select(this)
+					.transition()
+					.duration(200)
+					.attr('rx', 3)
+					.attr('fill', function(d) {
+						return repoColor(d.main_language);
+					});
+			});
 		});
+
 	}
 
 function filterRepos(list) {
-	console.log(list);
 	var cleanRepos = _.reject(list, function(repo) {
 		if(!repo.main_language) {
 			return repo;

@@ -1,27 +1,40 @@
 function renderUserProfile(user_json, repos_json) {
 
-	var user = [],repos;
-	user[0] = $.parseJSON(user_json);
-	repos = filterRepos($.parseJSON(repos_json));
-	color = generateStringColor(user[0].name);
-	hover = generateStringHover(user[0].name);
+	var user = $.parseJSON(user_json);
+	var repos = filterRepos($.parseJSON(repos_json));
 
 	var square = 60;
 
-		$('<div>')
+	renderProfileBox(user);
+	renderRepoGrid(repos);
+
+}
+
+function renderProfileBox(user) {
+
+	var color = '#5f7c81';
+	var hover = '#80a6ac';
+
+	$('<div>')
 			.attr('id', 'profile_box')
 			.appendTo('body');
 
-		var profile = d3.select('#profile_box')
-			.append('svg')
-			.attr('height', 200)
-			.attr('width', 200);
+	var profile = d3.select('#profile_box')
+		.append('svg')
+		.attr('height', 200)
+		.attr('width', 200);
 
-		profile.append('rect')
-			.attr('height', 200)
-			.attr('width', 200)
-			.attr('fill', color)
-			.attr('rx', 5)
+	profile.append('rect')
+		.attr('fill', 'white')
+		.attr('rx', 5)
+		.attr('height', 0)
+		.attr('width', 200)
+		.transition()
+		.duration(1250)
+		.attr('height', 200)
+		.attr('fill', color)
+		.each('end', function(){
+			d3.select(this)
 			.on('mouseover', function() {
 				d3.select(this)
 				.transition()
@@ -34,8 +47,18 @@ function renderUserProfile(user_json, repos_json) {
 				.duration(400)
 				.attr('fill', color);
 			});
+		});
 
-	renderRepoGrid(repos);
-
+	profile.append('text')
+		.text(user.name)
+		.attr('opacity', 0)
+		.attr('stroke', 'black')
+		.attr('x', 100)
+		.attr('y', 0)
+		.attr('text-anchor', 'middle')
+		.attr('font-size', 25)
+		.transition()
+		.duration(1250)
+		.attr('opacity', 1)
+		.attr('y', 40);
 }
-

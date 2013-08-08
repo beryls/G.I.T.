@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
 
 	def create
-		user = JSON.parse(RestClient.get("https://api.github.com/user", {:params => {:access_token => @@access_token}}))
+		user = JSON.parse(RestClient.get("https://api.github.com/user", {params: {:access_token => @@access_token}}))
   	user_info = {name: user['name'],
   		login: user['login'],
   		email: user['email'],
