@@ -16,7 +16,8 @@ class User < ActiveRecord::Base
 
 
 	def loadRepos
-		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", params: {access_token: ENV['ACCESS_TOKEN']}))
+		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", 
+			params: {access_token: ENV['ACCESS_TOKEN'], page: 1, per_page: 100}))
 		result.each do |repo|
 			info = {name: repo['name'],
 								html_url: repo['html_url'],

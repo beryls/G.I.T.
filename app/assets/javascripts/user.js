@@ -5,7 +5,9 @@ function renderUserProfile(user_json, repos_json) {
 	repos = $.parseJSON(repos_json);
 	console.log(repos);
 
-	var h = repos.length / 10 * 60;
+	var square = 60
+
+	var h = parseInt(repos.length / 10 + 1) * square;
 	var w = 600;
 
 	$('<div>').css('height', h)
@@ -23,10 +25,10 @@ function renderUserProfile(user_json, repos_json) {
 		.enter()
 		.append('rect')
 		.attr('x', function(d, i){
-			return (i % 10) * 60;
+			return (i % 10) * square;
 		})
 		.attr('y', function(d, i){
-			return (parseInt(i / 10) * 60);
+			return (parseInt(i / 10) * square);
 		})
 		.attr('height', 55)
 		.attr('width', 55)
@@ -36,8 +38,8 @@ function renderUserProfile(user_json, repos_json) {
 				.transition()
 				.duration(200)
 				.attr('fill', 'blue')
-				.attr('height', 60)
-				.attr('width', 60);
+				.attr('height', square)
+				.attr('width', square);
 		})
 		.on('mouseleave', function(d, i) {
 			d3.select(this)
