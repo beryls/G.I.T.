@@ -1,65 +1,41 @@
-
-var h = 700;
-var w = 1000;
-
-
 function renderUserProfile(user_json, repos_json) {
 
-	var user = [],repos = [];
+	var user = [],repos;
 	user[0] = $.parseJSON(user_json);
-	repos[0] = $.parseJSON(repos_json);
-	console.log(repos);
+	repos = filterRepos($.parseJSON(repos_json));
+	color = generateStringColor(user[0].name);
+	hover = generateStringHover(user[0].name);
 
-	var canvas = d3.select('#canvas_container')
-	.append('svg')
-	.attr('height', h)
-	.attr('width', w)
-	.attr('id', 'canvas');
+	var square = 60;
 
-	var force = d3.layout.force()
-    .nodes(repos)
-    .links([])
-    .size([w, h])
-    .start();
+		$('<div>')
+			.attr('id', 'profile_box')
+			.appendTo('body');
 
-var node = canvas.selectAll("circle.node")
-    .data(repos)
-		.enter().append("svg:circle")
-    .attr("class", "node")
-    .attr("cx", 100)
-    .attr("cy", 100)
-    .attr("r", 8)
-    .style("fill", 'white')
-    .style("stroke", 'black' )
-    .style("stroke-width", 1.5)
-    .call(force.drag);
+		var profile = d3.select('#profile_box')
+			.append('svg')
+			.attr('height', 200)
+			.attr('width', 200);
 
-	// circle = canvas.selectAll('circle')
-	// .data(data)
-	// .enter()
-	// .append('circle')
-	// .attr('cx', w/2)
-	// .attr('cy', h/6)
-	// .attr('r', 100)
-	// .attr('fill', '#69d3ff');
+		profile.append('rect')
+			.attr('height', 200)
+			.attr('width', 200)
+			.attr('fill', color)
+			.attr('rx', 5)
+			.on('mouseover', function() {
+				d3.select(this)
+				.transition()
+				.duration(400)
+				.attr('fill', hover);
+			})
+			.on('mouseout', function() {
+				d3.select(this)
+				.transition()
+				.duration(400)
+				.attr('fill', color);
+			});
 
-	
-	// circle.on('click', function() {
-	// 	if(this.attributes.r.textContent == 100) {
-	// 		d3.select(this)
-	// 		.transition()
-	// 		.duration(1000)
-	// 		.attr('cx', 0)
-	// 		.attr('cy', 0)
-	// 		.attr('r', 200);
-	// 	} else {
-	// 		d3.select(this)
-	// 		.transition()
-	// 		.duration(1000)
-	// 		.attr('cx', w/2)
-	// 		.attr('cy', h/6)
-	// 		.attr('r', 100);
-	// 	}
-	// });
+	renderRepoGrid(repos);
 
 }
+

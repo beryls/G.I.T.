@@ -3,13 +3,14 @@ class Repo < ActiveRecord::Base
   # serialization permits this data to be stored as a hash in the database
   serialize :collaborators, ActiveRecord::Coders::Hstore
   serialize :languages, ActiveRecord::Coders::Hstore
+  serialize :percent_languages, ActiveRecord::Coders::Hstore
 
   # these establish relationships between repo and other models
   has_and_belongs_to_many :portfolios
   belongs_to :user
 
   # allows for mass assignment of these attributes
-  attr_accessible :name, :html_url, :collaborators, :languages, :collaborators_url, :languages_url, :homepage_url
+  attr_accessible :name, :html_url, :collaborators, :languages, :collaborators_url, :languages_url, :homepage_url, :percent_languages, :main_language
 
   def self.updateOrCreate(info)
     if(Repo.find_by_html_url(info[:html_url]))
@@ -19,6 +20,7 @@ class Repo < ActiveRecord::Base
       repo = Repo.create(info)
     end
       repo.getLinesOfCodeByLanguage
+      # repo.percentOfCodeByLanguage
       repo.getCollaborators
       return repo
   end
@@ -32,12 +34,12 @@ class Repo < ActiveRecord::Base
   end
 
   def percentOfCodeByLanguage
-    percentByLanguage = {}
+    percent = {}
     totalLines = linesOfCode.to_f
     self.languages.each do |language, lines|
-      percentByLanguage[language] = (100*lines.to_f/totalLines).round(2)
+      percent[languages] = (100*lines.to_f/totalLines).round(2)
     end
-    return percentByLanguage
+    self.percent_languages = percent
   end
 
   def getCollaborators(options = {})
@@ -51,10 +53,13 @@ class Repo < ActiveRecord::Base
 
   def getLinesOfCodeByLanguage(options = {})
     linesByLanguage = {}
+    percentByLanguage = {}
     result = JSON.parse(RestClient.get(options[:url] || self.languages_url, params: {access_token: ENV['ACCESS_TOKEN']}))
     result.each do |language, lines|
       linesByLanguage[language] = lines
+      percentByLanguage[language] = lines
     end
     self.languages = linesByLanguage
+    self.percent_languages = percentByLanguage
   end
 end

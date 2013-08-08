@@ -16,13 +16,15 @@ class User < ActiveRecord::Base
 
 
 	def loadRepos
-		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", params: {access_token: ENV['ACCESS_TOKEN']}))
+		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", 
+			params: {access_token: ENV['ACCESS_TOKEN'], page: 1, per_page: 100}))
 		result.each do |repo|
 			info = {name: repo['name'],
 								html_url: repo['html_url'],
 								homepage_url: repo['homepage_url'],
 								collaborators_url: repo['collaborators_url'].split('{')[0],
-								languages_url: repo['languages_url']}
+								languages_url: repo['languages_url'],
+								main_language: repo['language']}
 			self.repos << Repo.updateOrCreate(info)
 		end
 		return self.repos

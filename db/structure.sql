@@ -114,13 +114,15 @@ CREATE TABLE repos (
     name character varying(255),
     html_url character varying(255),
     homepage_url character varying(255),
-    languages hstore,
     collaborators hstore,
+    languages hstore,
     user_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     languages_url character varying(255),
-    collaborators_url character varying(255)
+    collaborators_url character varying(255),
+    percent_languages hstore,
+    main_language character varying(255)
 );
 
 
@@ -270,3 +272,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130806211659');
 INSERT INTO schema_migrations (version) VALUES ('20130806212138');
 
 INSERT INTO schema_migrations (version) VALUES ('20130807031642');
+
+INSERT INTO schema_migrations (version) VALUES ('20130808151505');
