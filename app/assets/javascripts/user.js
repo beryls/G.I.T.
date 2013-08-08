@@ -14,6 +14,13 @@ function renderProfileBox(user) {
 
 	var color = '#5f7c81';
 	var hover = '#80a6ac';
+	var title = function() {
+		if(user['name']) {
+			return user['name'];
+		} else {
+			return user['login'];
+		}
+	}
 
 	$('<div>')
 			.attr('id', 'profile_box')
@@ -50,7 +57,7 @@ function renderProfileBox(user) {
 		});
 
 	profile.append('text')
-		.text(user.name)
+		.text(title)
 		.attr('opacity', 0)
 		.attr('stroke', 'black')
 		.attr('x', 100)

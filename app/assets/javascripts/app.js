@@ -4,9 +4,9 @@ function generateStringColor(string) {
 			string += 'ax';
 		}
 	}
-	var r = Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 4;
-	var g = Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 4;
-	var b = Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 4;
+	var r = Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 3;
+	var g = Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 3;
+	var b = Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 3;
 	colors = [r,b,g];
 	colors = _.map(colors, function(value) {
 		if(value > 150) {
@@ -26,9 +26,9 @@ function generateStringHover(string) {
 			string += 'ax';
 		}
 	}
-	var r = Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 2;
-	var g = Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 2;
-	var b = Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 2;
+	var r = Math.abs(string[0].charCodeAt(0) - string[1].charCodeAt(0)) * 5;
+	var g = Math.abs(string[2].charCodeAt(0) - string[3].charCodeAt(0)) * 5;
+	var b = Math.abs(string[4].charCodeAt(0) - string[5].charCodeAt(0)) * 5;
 	colors = [r,b,g];
 	colors = _.map(colors, function(value) {
 		if(value > 150) {
