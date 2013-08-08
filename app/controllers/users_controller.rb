@@ -15,11 +15,11 @@ class UsersController < ApplicationController
 
 	def create
 		user = JSON.parse(RestClient.get("https://api.github.com/user", {:params => {:access_token => @@access_token}}))
-  	user_info = {name: user['name'], 
-  		login: user['login'], 
-  		email: user['email'], 
-  		access_token: @@access_token, 
-  		avatar_url: user['avatar_url'], 
+  	user_info = {name: user['name'],
+  		login: user['login'],
+  		email: user['email'],
+  		access_token: @@access_token,
+  		avatar_url: user['avatar_url'],
   		repos_count: user['public_repos']}
   	user = User.updateOrCreate(user_info)
   	redirect_to "/sessions/#{user.id}/create"
