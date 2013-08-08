@@ -1,11 +1,10 @@
 var Repo = {
 
 	renderRepoGrid: function(repos) {
-
 		var square = 60,
 			h = parseInt(repos.length / 15 + 1) * square,
-			w = 15 * 60;
-		var svg = this.renderRepoGridCanvas(h,w);
+			w = 15 * 60,
+			svg = this.renderRepoGridCanvas(h,w);
 
 		svg.selectAll('rect')
 			.data(repos)
@@ -19,17 +18,16 @@ var Repo = {
 				return parseInt(i / 15) * square;
 			})
 			.attr('height', 0)
-			.attr('width', 0)
+			.attr('width', 55)
 			.attr('opacity', 1)
 			.attr('fill', function(d, i) {
 				return Repo.repoColor(d.main_language);
 			})
 			.transition()
 			.delay(function(d, i){
-				return i * 10;
+				return i * 40;
 			})
-			.duration(1250)
-			.attr('width', 55)
+			.duration(300)
 			.attr('height', 55)
 			.each('end', function() {
 				d3.select(this).on('mouseenter', function(d) {
@@ -67,8 +65,7 @@ var Repo = {
 			.append('svg')
 			.attr('height', h)
 			.attr('width', w);
-
-		return svg;
+			return svg;
 	},
 
 	repoColor: function(lang) {
