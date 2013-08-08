@@ -7,6 +7,7 @@ function renderUserProfile(user_json, repos_json) {
 
 	renderProfileBox(user);
 	renderRepoGrid(repos);
+	renderGraphs();
 
 }
 
