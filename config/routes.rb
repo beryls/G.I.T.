@@ -6,7 +6,7 @@ GIT::Application.routes.draw do
   get '/sessions/:id/destroy' => 'sessions#destroy', as: 'destroy_user_session'
   get '/users/create' => 'users#create', as: 'create_user'
   get '/users/:id' => 'users#show', as: 'user'
-  get '/search/users' => 'welcome#search', as: 'search'
+  get '/select/:login' => 'welcome#select', as: 'select'
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

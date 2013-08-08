@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
 	attr_accessible :name, :login, :email, :avatar_url, :access_token, :repos_count
 
 	def self.updateOrCreate(info)
-		if(User.find_by_email(info[:email]))
-			user = User.find_by_email(info[:email])
+		if(User.find_by_login(info[:login]))
+			user = User.find_by_login(info[:login])
 			user.update_attributes(info)
 		else
 			user = User.create(info)
@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
 
 	def loadRepos
-		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", 
+		result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos",
 			params: {access_token: ENV['ACCESS_TOKEN'], page: 1, per_page: 100}))
 		result.each do |repo|
 			info = {name: repo['name'],
@@ -40,5 +40,5 @@ class User < ActiveRecord::Base
 			end
 		end
 		return total_lines
-	end	
+	end
 end
