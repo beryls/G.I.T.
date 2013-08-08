@@ -1,5 +1,7 @@
 #repos_container {
-	border-radius: 10px;
+	border-radius: 5px;
 	padding: 5px;
 	margin: auto;
+	background:rgba(188, 188, 188, 1.0000);
+
 }
