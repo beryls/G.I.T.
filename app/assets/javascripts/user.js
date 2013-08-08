@@ -1,65 +1,103 @@
 
-var h = 700;
-var w = 1000;
+// var h = 700;
+// var w = 1000;
 
 
 function renderUserProfile(user_json, repos_json) {
 
-	var user = [],repos = [];
-	user[0] = $.parseJSON(user_json);
-	repos[0] = $.parseJSON(repos_json);
-	console.log(repos);
+	// var user = [],repos = [];
+	// user[0] = $.parseJSON(user_json);
+	// repos[0] = $.parseJSON(repos_json);
+	// console.log(repos);
 
-	var canvas = d3.select('#canvas_container')
-	.append('svg')
-	.attr('height', h)
-	.attr('width', w)
-	.attr('id', 'canvas');
+	var nodes = [
+	{'x': 100, 'y': 100},
+	{'x': 200, 'y': 200}];
+
+	var links = [
+	{'source':0, 'target':1}];
+
+	var w = 1280,
+	    h = 800,
+	    r = 6,
+	    z = d3.scale.category20c();
 
 	var force = d3.layout.force()
-    .nodes(repos)
-    .links([])
-    .size([w, h])
-    .start();
+	    .gravity(0.06)
+	    .charge(-150)
+	    .linkDistance(40)
+	    .size([w *= 2 / 3, h *= 2 / 3]);
 
-var node = canvas.selectAll("circle.node")
-    .data(repos)
-		.enter().append("svg:circle")
-    .attr("class", "node")
-    .attr("cx", 100)
-    .attr("cy", 100)
-    .attr("r", 8)
-    .style("fill", 'white')
-    .style("stroke", 'black' )
-    .style("stroke-width", 1.5)
-    .call(force.drag);
+	var svg = d3.select("#chart").append("svg:svg")
+	    .attr("width", w)
+	    .attr("height", h)
+	  .append("svg:g")
+	    .attr("transform", "translate(" + w / 4 + "," + h / 3 + ")");
 
-	// circle = canvas.selectAll('circle')
-	// .data(data)
-	// .enter()
-	// .append('circle')
-	// .attr('cx', w/2)
-	// .attr('cy', h/6)
-	// .attr('r', 100)
-	// .attr('fill', '#69d3ff');
+	svg.append("svg:rect")
+	    .attr("width", w)
+	    .attr("height", h)
+	    .style("stroke", "#000");
 
 	
-	// circle.on('click', function() {
-	// 	if(this.attributes.r.textContent == 100) {
-	// 		d3.select(this)
-	// 		.transition()
-	// 		.duration(1000)
-	// 		.attr('cx', 0)
-	// 		.attr('cy', 0)
-	// 		.attr('r', 200);
-	// 	} else {
-	// 		d3.select(this)
-	// 		.transition()
-	// 		.duration(1000)
-	// 		.attr('cx', w/2)
-	// 		.attr('cy', h/6)
-	// 		.attr('r', 100);
-	// 	}
-	// });
+	  var link = svg.selectAll("line")
+	      .data(links)
+	    .enter().append("svg:line");
+
+	  var node = svg.selectAll("circle")
+	      .data(nodes)
+	    .enter().append("svg:circle")
+	      .attr("r", r - .75)
+	      .style("fill", function(d) { return z(d.group); })
+	      .style("stroke", function(d) { return d3.rgb(z(d.group)).darker(); })
+	      .call(force.drag);
+
+	  force
+	      .nodes(nodes)
+	      .links(links)
+	      .on("tick", tick)
+	      .start();
+
+	  function tick() {
+	    node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(w - r, d.x)); })
+	        .attr("cy", function(d) { return d.y = Math.max(r, Math.min(h - r, d.y)); });
+
+	    link.attr("x1", function(d) { return d.source.x; })
+	        .attr("y1", function(d) { return d.source.y; })
+	        .attr("x2", function(d) { return d.target.x; })
+	        .attr("y2", function(d) { return d.target.y; });
+	  }
+	// var svg = d3.select('#canvas_container')
+	// 	.append('svg')
+	// 	.attr('height', h)
+	// 	.attr('width', w)
+	// 	.attr('id', 'canvas');
+
+	// var node = svg.selectAll('circle')
+	// 	.data(nodes)
+	// 	.enter()
+	// 	.append('circle')
+	// 	.attr('r',40)
+	// 	.attr('fill', 'white')
+	// 	.attr('stroke', 'black');
+
+	// var force = d3.layout.force()
+ //    .size([w, h]);
+
+ //  force
+ //      .nodes(nodes)
+ //      .links(links)
+ //      .on("tick", tick)
+ //      .start();
+
+ //  function tick() {
+ //    node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(w - r, d.x)); })
+ //        .attr("cy", function(d) { return d.y = Math.max(r, Math.min(h - r, d.y)); });
+
+ //    link.attr("x1", function(d) { return d.source.x; })
+ //        .attr("y1", function(d) { return d.source.y; })
+ //        .attr("x2", function(d) { return d.target.x; })
+ //        .attr("y2", function(d) { return d.target.y; });
 
 }
+	
