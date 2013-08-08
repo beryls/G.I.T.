@@ -1,9 +1,18 @@
 <h1>Git It Together!</h1>
 
 <h4>Find a GitHub user</h4>
-<%= form_tag search_path, method: 'get' do %>
+<%= form_tag root_path, method: 'get' do %>
   <p>
     <%= text_field_tag :q, params[:q] %>
     <%= submit_tag "Search", name: nil %>
   </p>
+<% end %>
+
+<% if params[:q] %>
+  <% if @results["users"].length == 0 %>
+    <h3>No results returned.</h3>
+  <% else %>
+    <p>Search results for: <%= @search %></p>
+    <p><%= @results %></p>
+  <% end %>
 <% end %>
