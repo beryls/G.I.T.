@@ -8,11 +8,20 @@
   </p>
 <% end %>
 
-<% if params[:q] %>
-  <% if @results["users"].length == 0 %>
-    <h3>No results returned.</h3>
-  <% else %>
-    <p>Search results for: <%= @search %></p>
-    <p><%= @results %></p>
+<% if current_user %>
+  <% if params[:q] %>
+    <% if @results["users"].length == 0 %>
+      <h3>No results returned.</h3>
+    <% else %>
+      <p>Search results for: <%= @search %></p>
+      <% @results["users"].each do |result| %>
+        <p><%= result["login"] %>
+          <% if result["name"] %>
+            <%= " - #{result["name"]}" %></p>
+          <% end %>
+      <% end %>
+    <% end %>
   <% end %>
+<% else %>
+  <p>Please log in to search for users.</p>
 <% end %>
