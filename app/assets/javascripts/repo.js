@@ -32,11 +32,9 @@ function renderRepoGrid(repos) {
 		.attr('y', function(d, i){
 			return (parseInt(i / 10) * square);
 		})
-		.attr('height', 55)
+		.attr('height', 0)
 		.attr('width', 55)
-		.attr('fill', function(d, i) {
-			return repoColor(d.main_language);
-		})
+		.attr('fill', 'white')
 		.on('mouseenter', function(d) {
 			d3.select(this)
 				.transition()
@@ -54,7 +52,13 @@ function renderRepoGrid(repos) {
 				.attr('fill', function(d) {
 					return repoColor(d.main_language);
 				});
-		});
+		})
+		.transition()
+		.duration(1250)
+		.attr('height', 55)
+		.attr('fill', function(d, i) {
+			return repoColor(d.main_language);
+		})
 	}
 
 function filterRepos(list) {

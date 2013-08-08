@@ -20,10 +20,10 @@ function renderUserProfile(user_json, repos_json) {
 			.attr('width', 200);
 
 		profile.append('rect')
-			.attr('height', 200)
-			.attr('width', 200)
-			.attr('fill', color)
+			.attr('fill', 'white')
 			.attr('rx', 5)
+			.attr('height', 0)
+			.attr('width', 200)
 			.on('mouseover', function() {
 				d3.select(this)
 				.transition()
@@ -35,15 +35,24 @@ function renderUserProfile(user_json, repos_json) {
 				.transition()
 				.duration(400)
 				.attr('fill', color);
-			});
+			})
+			.transition()
+			.duration(1250)
+			.attr('height', 200)
+			.attr('fill', color);
 
 		profile.append('text')
 			.text(user.name)
+			.attr('opacity', 0)
 			.attr('stroke', 'black')
 			.attr('x', 100)
-			.attr('y', 40)
+			.attr('y', 0)
 			.attr('text-anchor', 'middle')
-			.attr('font-size', 25);
+			.attr('font-size', 25)
+			.transition()
+			.duration(1250)
+			.attr('opacity', 1)
+			.attr('y', 40);
 
 	renderRepoGrid(repos);
 
