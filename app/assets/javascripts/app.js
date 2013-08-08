@@ -16,7 +16,6 @@ function generateStringColor(string) {
 		}
 		return value;
 	});
-	console.log(colors);
 	return "rgb(" + colors[0] + ',' + colors[1] + ',' + colors[2] + ')';
 }
 
@@ -38,6 +37,5 @@ function generateStringHover(string) {
 		}
 		return value;
 	});
-	console.log(colors);
 	return "rgb(" + colors[0] + ',' + colors[1] + ',' + colors[2] + ')';
 }
