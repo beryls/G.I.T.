@@ -4,7 +4,8 @@ var Repo = {
 		var square = 60,
 			h = parseInt((repos.length / 15) + 1) * square,
 			w = 15 * 60,
-			svg = this.renderRepoGridCanvas(h,w);
+			time = repos.length * 15 + 200
+			svg = this.renderRepoGridCanvas(h,w,time);
 
 		svg.selectAll('rect')
 			.data(repos)
@@ -20,6 +21,7 @@ var Repo = {
 			.attr('height', 0)
 			.attr('width', 55)
 			.attr('opacity', 1)
+			.attr('class', 'repo')
 			.attr('fill', function(d, i) {
 				return Repo.repoColor(d.main_language);
 			})
@@ -31,11 +33,11 @@ var Repo = {
 			.ease('linear')
 			.attr('height', 55)
 			.each('end', function() {
-				d3.select(this).on('mouseenter', function(d) {
+				d3.select(this)
+				.on('mouseenter', function(d) {
 					d3.select(this)
 						.transition()
-						.duration(400)
-						
+						.duration(100)
 						.attr('fill', function(d) {
 							return Repo.repoHover(d.main_language);
 					})
@@ -55,18 +57,50 @@ var Repo = {
 			});
 	},
 
-	renderRepoGridCanvas: function(h,w) {
+	renderRepoGridCanvas: function(h,w, time) {
 
-		$('<div>').css('height', h)
-			.css('width', w)
+		$('<div>').css('height', 0)
 			.attr('id', 'repos_container')
-			.appendTo('body');
+			.appendTo('body')
+			.animate({
+				height: h
+			}, time);
 
 		var svg = d3.select('#repos_container')
 			.append('svg')
 			.attr('height', h)
 			.attr('width', w);
 			return svg;
+	},
+
+	killRepoGrid: function() {
+		var repos = d3.selectAll(".repo")[0],
+		i = repos.length,
+		min = 0,
+		delay = 0,
+		time = repos.length * 10 + 200;
+		for(i; i > min; i-=1) {
+			d3.select(repos[i-1])
+				.transition()
+				.delay(delay)
+				.duration(200)
+				.attr('height', 0)
+				.each('end', function(){
+					d3.select(this)
+					.remove();
+				});
+			delay += 10;
+		}
+
+		$('#repos_container').animate({
+			height: 0
+		}, time, function() {
+			$(this).animate({
+				padding: 0
+			}, 100, function(){
+				$(this).remove();
+			});
+		});
 	},
 
 	repoColor: function(lang) {

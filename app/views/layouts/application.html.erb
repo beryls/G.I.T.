@@ -10,18 +10,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<% if current_user %>
-	<p><%= link_to 'Logout', destroy_user_session_path(current_user.id) %> Logged in as:</p>
-		<% if current_user.name && current_user.name.length > 0 %>
-			<%= current_user.name %>
-			<%= link_to 'Profile', user_path(current_user.id) %>
-		<% else %>
-			<p><%= current_user.login %></p>
-		<% end %>
-
-<% else %>
-	<p><a href='https://github.com/login/oauth/authorize?client_id=<%=ENV["CLIENT_ID"]%>'>Click here</a> to begin!</p>
-<% end %>
+<%= render 'layouts/navbar' %>
 <%= yield %>
 </body>
 </html>

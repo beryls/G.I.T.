@@ -1,0 +1,23 @@
+<div id = 'navbar'> 
+	<div id = 'nav_title'>
+		<%= link_to 'Git It Together', root_url %>
+	</div>
+	<div class = 'nav_button'>
+		<%= link_to 'Home', root_url %>
+	</div>
+	<div class = 'nav_button'>
+		<%= link_to 'About', '/' %>
+	</div>
+	<% if current_user %>
+		<div class = 'nav_button'>
+				<%= link_to 'Profile', user_path(current_user.id) %>
+		</div>
+		<div class = 'nav_button'>
+			<%= link_to 'Logout', destroy_user_session_path(current_user.id) %> 
+		</div>
+	<% else %>
+		<div class = 'nav_button'>
+			<a href='https://github.com/login/oauth/authorize?client_id=<%=ENV["CLIENT_ID"]%>'>Login</a></p>
+		</div>
+	<% end %>
+</div>
