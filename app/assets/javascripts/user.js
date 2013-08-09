@@ -15,24 +15,36 @@ var User = {
 				}
 			};
 
+		// appends profile box div to page
 		$('<div>')
 				.attr('id', 'profile_box')
-				.appendTo('body');
+				.css('height', 0)
+				.appendTo('body')
+				.animate({
+					height: 200,
+					opacity: 1,
+					padding: 5
+				},1000);
 
+		// appends svg canvas to profile box div
 		var profile = d3.select('#profile_box')
 			.append('svg')
 			.attr('height', 200)
 			.attr('width', 200);
 
+
+		// appends colored rectangle to svg canvas
+		// this is active space for clicking and text
 		var rect = profile.append('rect')
-			.attr('fill', 'white')
+			.attr('opacity', 0)
+			.attr('fill', color)
 			.attr('rx', 5)
 			.attr('height', 0)
 			.attr('width', 200)
 			.transition()
 			.duration(1250)
 			.attr('height', 200)
-			.attr('fill', color)
+			.attr('opacity', color)
 			.each('end', function(){
 				d3.select(this)
 				.on('mouseover', function() {
@@ -53,7 +65,7 @@ var User = {
 					} else {
 						Repo.killRepoGrid();
 					}
-					if(!d3.select('#repos_count')[0][0]) {
+					if(!d3.select('#repos_count')[0][0] && !d3.select('#lines_written')[0][0]) {
 						d3.select('#user_title')
 							.transition()
 							.duration(1250)
@@ -106,7 +118,8 @@ var User = {
 					}
 				});
 			});
-						
+		
+		// appends name or username to profile box
 		profile.append('text')
 			.text(title)
 			.attr('id', 'user_title')
