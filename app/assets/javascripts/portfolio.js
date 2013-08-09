@@ -1,5 +1,5 @@
 function renderGraphs() {
-  $('<div>').css('height', 300)
+  $('<div>').css('height', 310)
     .css('width', 910)
     .attr('id', 'graphs_container')
     .appendTo('body');
@@ -10,7 +10,7 @@ function renderGraphs() {
 
 function renderBarGraphCanvas() {
 
-  $('<div>').css('height', 250)
+  $('<div>').css('height', 300)
     .css('width', 440)
     .attr('id', 'bar_graph_container')
     .appendTo('#graphs_container');
@@ -31,7 +31,7 @@ function renderBarGraph() {
 
 function renderPieChartCanvas() {
 
-  $('<div>').css('height', 250)
+  $('<div>').css('height', 300)
     .css('width', 440)
     .attr('id', 'pie_chart_container')
     .appendTo('#graphs_container');
