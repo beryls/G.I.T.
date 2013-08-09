@@ -4,7 +4,7 @@ var Repo = {
 		var square = 60,
 			h = parseInt((repos.length / 15) + 1) * square,
 			w = 15 * 60,
-			time = repos.length * 15 + 200
+			time = repos.length * 10 + 200,
 			svg = this.renderRepoGridCanvas(h,w,time);
 
 		svg.selectAll('rect')
@@ -27,14 +27,14 @@ var Repo = {
 			})
 			.transition()
 			.delay(function(d, i){
-				return i * 15;
+				return i * 10;
 			})
 			.duration(200)
 			.ease('linear')
 			.attr('height', 55)
 			.each('end', function() {
 				d3.select(this)
-				.on('mouseenter', function(d) {
+				.on('mouseenter', function() {
 					d3.select(this)
 						.transition()
 						.duration(100)
@@ -45,7 +45,7 @@ var Repo = {
 					.duration(600)
 					.attr('rx', 25);
 				})
-				.on('mouseleave', function(d, i) {
+				.on('mouseleave', function() {
 				d3.select(this)
 					.transition()
 					.duration(200)

@@ -1,13 +1,13 @@
 var Graph = {
 
-	hash1: { "Java": 3225, "JavaScript": 4523, "Ruby": 6570, "C++": 2427, "Perl": 5005 },
-  hash_keys: ['Java', 'JavaScript', 'Ruby', 'C++', 'Perl'],
-  hash_values: [3225, 4523, 6570, 2427, 5005],
+	languages: { "Java": 3225, "JavaScript": 4523, "Ruby": 6570, "C++": 2427, "Perl": 5005 },
+  hash_keys: [],
+  hash_values: [],
 
-  testValues: function() {
-		for (var key in hash1) {
+  setHashKeyPairs: function() {
+		for (var key in this.languages) {
 			this.hash_keys.push(key);
-			this.hash_values.push(hash1[key]);
+			this.hash_values.push(this.languages[key]);
     }
   },
 
@@ -17,16 +17,21 @@ var Graph = {
       .attr('id', 'graphs_container')
       .appendTo('body');
 
+    this.setHashKeyPairs();
     this.renderBarGraph();
           // this.renderPieChart();
   },
 
   renderBarGraphCanvas: function() {
 
-    $('<div>').css('height', 300)
+    $('<div>').css('height', 0)
       .css('width', 440)
+      .css('padding-bottom', 0)
       .attr('id', 'bar_graph_container')
-      .appendTo('#graphs_container');
+      .appendTo('#graphs_container')
+      .animate({
+				height: 300
+			}, 1000);
 
     var svg = d3.select('#bar_graph_container')
       .append('svg')
@@ -44,74 +49,126 @@ var Graph = {
 
 	var xScale = d3.scale.ordinal()
 		.domain(d3.range(Graph.hash_values.length))
-		.rangeRoundBands([0, w], 1/(Graph.hash_values.length));
+		.rangeRoundBands([0, w], 1/(Graph.hash_values.length * 0.5));
 
 	var yScale = d3.scale.linear()
-		.domain([0, d3.max(Graph.hash_values)])
+		.domain([0, (d3.max(Graph.hash_values) * 1.2)])
 		.range([0, h]);
-	console.log(Graph.hash_values);
+
 	svg.selectAll("rect")
+	.data(Graph.hash_values)
+	.enter()
+	.append("rect")
+	.attr("x", function(d, i) {
+		if(Graph.hash_values.length === 1) {
+			return w/2 - 35;
+		} else {
+			return xScale(i);
+		}
+	})
+	.attr('ry', 2)
+	.attr('y', h)
+	.attr("width", function() {
+		if(Graph.hash_values.length === 1) {
+			return 70;
+		} else {
+			return xScale.rangeBand();
+		}
+	})
+	.attr('height', 0)
+	.attr('id', function(d, i) {
+		return i;
+  })
+	.attr("fill", function(d, i) {
+		return Repo.repoColor(Graph.hash_keys[i]);
+	})
+	.transition()
+	.delay(function(d, i){
+		return 500 + 100 * i;
+	})
+	.duration(1000)
+	.attr("height", function(d) {
+		return yScale(d);
+	})
+	.attr("y", function(d) {
+		return h - yScale(d);
+	})
+	.each('end', function(){
+		d3.select(this)
+		.on('mouseenter', function() {
+			d3.select(this)
+				.transition()
+				.duration(100)
+				.attr('fill', function() {
+					return Repo.repoHover(Graph.hash_keys[this.id]);
+				});
+		});
+		d3.select(this)
+		.on("mouseleave", function() {
+			d3.select(this)
+			.transition()
+			.duration(1000)
+			.attr("fill", function(d, i) {
+				return Repo.repoColor(Graph.hash_keys[this.id]);
+			});
+		});
+	});
+
+	//Create labels
+	svg.selectAll("text")
 		.data(Graph.hash_values)
 		.enter()
-		.append("rect")
+		.append("text")
+		.text(function(d, i) {
+			return Graph.hash_keys[i];
+		})
+		.attr("text-anchor", "middle")
 		.attr("x", function(d, i) {
-			return xScale(i);
+			return xScale(i) + xScale.rangeBand() / 2;
 		})
 		.attr('y', h)
-		.attr("width", xScale.rangeBand())
-		.attr('height', 0)
-		.attr("fill", function(d, i) {
-			return Repo.repoColor(Graph.hash_keys[i]);
-		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", 11)
+		.attr("fill", "black")
+		.attr('opacity', 0)
 		.transition()
-		.delay(function(d, i){
+		.delay(function(d, i) {
+			return 500 + 100 * i;
+		})
+		.duration(1000)
+		.attr("y", function(d) {
+			return h - yScale(d) - 5;
+		})
+		.attr('opacity', 1)
+		.attr('font-size', 16);
+
+	svg.selectAll('text')
+		.data(Graph.hash_keys)
+		.enter()
+		.append("text")
+		.text(function(d, i) {
+			console.log('texting');
+			return Graph.hash_values[i];
+		})
+		.attr("text-anchor", "middle")
+		.attr("x", function(d, i) {
+			return xScale(i) + xScale.rangeBand() / 2;
+		})
+		.attr('y', h)
+		.attr("font-family", "sans-serif")
+		.attr("font-size", 11)
+		.attr("fill", "black")
+		.attr('opacity', 0)
+		.transition()
+		.delay(function(d, i) {
 			return 100 * i;
 		})
 		.duration(1000)
-		.attr("height", function(d) {
-			return yScale(d);
-		})
 		.attr("y", function(d) {
-			return h - yScale(d);
-		}).each('end', function(i){
-			d3.select(this)
-			.on("mouseover", function(d, i) {
-				console.log(i);
-				d3.select(this)
-				.transition()
-				.duration(250)
-				.attr("fill", function(d, i) {
-					console.log(i);
-				});
-			})
-			.on("mouseout", function(d, i) {
-				d3.select(this)
-				.transition()
-				.duration(250)
-				.attr("fill", function(d, i) {
-					console.log(i);
-				});
-			});
-		});
-
-		//Create labels
-		svg.selectAll("text")
-			.data(Graph.hash_values)
-			.enter()
-			.append("text")
-			.text(function(d, i) {
-				return Graph.hash_keys[i];
-			})
-			.attr("text-anchor", "middle")
-			.attr("x", function(d, i) {
-				return xScale(i) + xScale.rangeBand() / 2;
-			})
-			.attr("y", function(d) {
-				return h - yScale(d) + 14;
-			})
-			.attr("font-family", "sans-serif")
-			.attr("font-size", "11px")
-			.attr("fill", "white");
+			return h - yScale(hash_values[i]) - 5;
+		})
+		.attr('opacity', 1)
+		.attr('font-size', 16);
 },
 
 };
