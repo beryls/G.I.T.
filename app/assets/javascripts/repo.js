@@ -48,7 +48,7 @@ var Repo = {
 				.on('mouseleave', function() {
 				d3.select(this)
 					.transition()
-					.duration(200)
+					.duration(1000)
 					.attr('rx', 3)
 					.attr('fill', function(d) {
 						return Repo.repoColor(d.main_language);

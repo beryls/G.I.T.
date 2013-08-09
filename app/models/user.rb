@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 	has_many :repos
 	has_many :portfolios
+	serialize :lines_by_language, ActiveRecord::Coders::Hstore
+	serialize :percent_by_language, ActiveRecord::Coders::Hstore
 	attr_accessible :name, :login, :email, :avatar_url, :access_token, :repos_count, :lines_written, :percent_by_language, :lines_by_language
 
 	def self.updateOrCreate(info)
@@ -12,6 +14,7 @@ class User < ActiveRecord::Base
 		end
 		user.loadRepos
 		user.linesOfCode
+		user.userLinesByLanguage
 		return user
 	end
 
@@ -49,4 +52,17 @@ class User < ActiveRecord::Base
 		end
 		self.update_attributes(lines_written: lines)
 	end
+
+	def userLinesByLanguage
+			user = self
+			linesByLanguage = {}
+			self.repos.each do |repo|
+				repo.languages.each do |language, repo_lines|
+					linesByLanguage[language] ||= 0;
+					linesByLanguage[language] += repo_lines.to_i;
+				end
+			end
+			user.lines_by_language = linesByLanguage
+				
+	end	
 end

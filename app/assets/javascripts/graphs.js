@@ -1,6 +1,6 @@
 var Graph = {
 
-	languages: { "Java": 3225, "JavaScript": 4523, "Ruby": 6570, "C++": 2427, "Perl": 5005 },
+	languages: {},
   hash_keys: [],
   hash_values: [],
 
@@ -11,12 +11,17 @@ var Graph = {
     }
   },
 
-	renderGraphs: function() {
-    $('<div>').css('height', 310)
-      .css('width', 910)
+	renderGraphs: function(user_languages) {
+    $('<div>').css('height', 300)
+      .css('width', 1000)
+      .css('padding-bottom', 0)
       .attr('id', 'graphs_container')
-      .appendTo('body');
+      .appendTo('body')
+      .animate({
+				height: 300
+			}, 1000);
 
+    this.languages = user_languages;
     this.setHashKeyPairs();
     this.renderBarGraph();
           // this.renderPieChart();
@@ -24,36 +29,26 @@ var Graph = {
 
   renderBarGraphCanvas: function() {
 
-    $('<div>').css('height', 0)
-      .css('width', 440)
-      .css('padding-bottom', 0)
-      .attr('id', 'bar_graph_container')
-      .appendTo('#graphs_container')
-      .animate({
-				height: 300
-			}, 1000);
-
-    var svg = d3.select('#bar_graph_container')
+    var svg = d3.select('#graphs_container')
       .append('svg')
       .attr('height', 300)
-      .attr('width', 440);
+      .attr('width', 500);
 
     return svg;
   },
 
 	renderBarGraph: function() {
 		var h = 300;
-		var w = 440;
+		var w = 500;
 
 	svg = this.renderBarGraphCanvas();
 
 	var xScale = d3.scale.ordinal()
 		.domain(d3.range(Graph.hash_values.length))
-		.rangeRoundBands([0, w], 1/(Graph.hash_values.length * 0.5));
+		.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
 
-	var yScale = d3.scale.linear()
-		.domain([0, (d3.max(Graph.hash_values) * 1.2)])
-		.range([0, h]);
+	var yScale = d3.scale.log()
+		.range([0, h/10]);
 
 	svg.selectAll("rect")
 	.data(Graph.hash_values)
@@ -131,6 +126,9 @@ var Graph = {
 		.attr("font-size", 11)
 		.attr("fill", "black")
 		.attr('opacity', 0)
+		.attr('id', function(d, i){
+			return i;
+		})
 		.transition()
 		.delay(function(d, i) {
 			return 500 + 100 * i;
@@ -140,35 +138,28 @@ var Graph = {
 			return h - yScale(d) - 5;
 		})
 		.attr('opacity', 1)
-		.attr('font-size', 16);
-
-	svg.selectAll('text')
-		.data(Graph.hash_keys)
-		.enter()
-		.append("text")
-		.text(function(d, i) {
-			console.log('texting');
-			return Graph.hash_values[i];
-		})
-		.attr("text-anchor", "middle")
-		.attr("x", function(d, i) {
-			return xScale(i) + xScale.rangeBand() / 2;
-		})
-		.attr('y', h)
-		.attr("font-family", "sans-serif")
-		.attr("font-size", 11)
-		.attr("fill", "black")
-		.attr('opacity', 0)
-		.transition()
-		.delay(function(d, i) {
-			return 100 * i;
-		})
-		.duration(1000)
-		.attr("y", function(d) {
-			return h - yScale(hash_values[i]) - 5;
-		})
-		.attr('opacity', 1)
-		.attr('font-size', 16);
+		.attr('font-size', 16)
+		.each('end', function() {
+			d3.select(this)
+			.on('mouseenter', function() {
+				d3.select(this)
+				.transition()
+				.duration(250)
+				.attr('y', function() {
+					return h - yScale(Graph.hash_values[this.id]) - 10;
+				})
+				.text(Graph.hash_values[this.id]);
+			})
+			.on('mouseleave', function() {
+				d3.select(this)
+				.transition()
+				.duration(500)
+				.attr('y', function() {
+					return h - yScale(Graph.hash_values[this.id]) - 5;
+				})
+				.text(Graph.hash_keys[this.id]);
+			});
+		});
 },
 
 };

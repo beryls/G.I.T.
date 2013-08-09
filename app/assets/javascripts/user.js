@@ -117,7 +117,8 @@ var User = {
 							.attr('y', 100);
 					}
 				});
-				Graph.renderGraphs();
+				console.log(user);
+				Graph.renderGraphs(user['lines_by_language']);
 			});
 		
 		// appends name or username to profile box
