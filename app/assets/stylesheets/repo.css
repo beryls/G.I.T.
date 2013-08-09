@@ -1,8 +1,9 @@
 #repos_container {
 	border-radius: 5px;
-  padding: 5px;
+	width:900px;
+	text-align: center;
+  padding: 10px;
 	margin: auto;
   margin-bottom: 10px;
 	background:rgba(188, 188, 188, 1.0000);
-
 }

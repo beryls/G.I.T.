@@ -7,3 +7,11 @@
 	border-radius: 5px;
 	background: rgba(188, 188, 188, .7);
 }
+
+#container {
+	width: 900px;
+	background: rgba(188, 188, 188, .7);
+	margin: auto;
+	padding: 5px;
+	border-radius: 5px;
+}
