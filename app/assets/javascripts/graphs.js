@@ -25,10 +25,15 @@ var Graph = {
 
   renderBarGraphCanvas: function() {
 
-		$('<div>').css('height', 300)
+		$('<div>').css('height', 0)
       .css('width', 440)
+      .css('opacity', 0)
       .attr('id', 'bar_graph_container')
-      .appendTo('#graphs_container');
+      .appendTo('#graphs_container')
+      .animate({
+				height: 300,
+				opacity: 1
+      },1250);
 
     var svg = d3.select('#bar_graph_container')
       .append('svg')
@@ -129,7 +134,6 @@ var Graph = {
 		.attr("font-size", 11)
 		.attr("fill", "black")
 		.attr('opacity', 0)
-		.attr('class', 'label')
 		.attr('id', function(d, i){
 			return i;
 		})
@@ -182,6 +186,7 @@ var Graph = {
 			.transition()
 			.duration(750)
 			.attr('y', -5)
+			.attr('opacity', 0)
 			.each('end', function() {
 				d3.select(this)
 				.remove();

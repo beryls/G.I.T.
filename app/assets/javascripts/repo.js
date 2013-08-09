@@ -1,6 +1,9 @@
 var Repo = {
 
-	renderRepoGrid: function(repos) {
+	current_repo: "",
+
+	renderRepoGrid: function(repos, login) {
+
 		var square = 60,
 			h = parseInt((repos.length / 15) + 1) * square,
 			w = 15 * 60,

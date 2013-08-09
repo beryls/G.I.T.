@@ -62,7 +62,7 @@ var User = {
 				.on('click', function() {
 					if(!d3.select('#repos_container')[0][0]) {
 						Graph.killBarGraph();
-						Repo.renderRepoGrid(repos);
+						Repo.renderRepoGrid(repos, user.login);
 					} else {
 						Repo.killRepoGrid();
 						Graph.renderGraphs(user['lines_by_language']);
