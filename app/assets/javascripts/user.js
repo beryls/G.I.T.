@@ -8,6 +8,7 @@ var User = {
 
 		this.renderProfileBox(user, repos.length);
 		Repo.renderRepoGrid(repos);
+		renderGraphs();
 
 	},
 
