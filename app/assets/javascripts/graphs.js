@@ -48,7 +48,7 @@ var Graph = {
 	var xScale = d3.scale.ordinal()
 		.domain(d3.range(Graph.hash_values.length))
 		.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
-
+ 
 	var yScale = d3.scale.log()
 		.range([0, h/10]);
 
