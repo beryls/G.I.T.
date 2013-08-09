@@ -2,7 +2,7 @@ var Repo = {
 
 	renderRepoGrid: function(repos) {
 		var square = 60,
-			h = parseInt(repos.length / 15 + 1) * square,
+			h = parseInt((repos.length / 15) + 1) * square,
 			w = 15 * 60,
 			svg = this.renderRepoGridCanvas(h,w);
 
