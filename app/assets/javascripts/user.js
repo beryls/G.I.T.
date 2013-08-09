@@ -64,6 +64,7 @@ var User = {
 						Repo.renderRepoGrid(repos);
 					} else {
 						Repo.killRepoGrid();
+						Graph.renderGraphs(user['lines_by_language']);
 					}
 					if(!d3.select('#repos_count')[0][0] && !d3.select('#lines_written')[0][0]) {
 						d3.select('#user_title')
@@ -118,7 +119,7 @@ var User = {
 					}
 				});
 				console.log(user);
-				Graph.renderGraphs(user['lines_by_language']);
+				
 			});
 		
 		// appends name or username to profile box

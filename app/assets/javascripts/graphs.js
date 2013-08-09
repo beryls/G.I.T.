@@ -54,6 +54,7 @@ var Graph = {
 	.data(Graph.hash_values)
 	.enter()
 	.append("rect")
+	.attr('class', 'bar')
 	.attr("x", function(d, i) {
 		if(Graph.hash_values.length === 1) {
 			return w/2 - 35;
@@ -126,6 +127,7 @@ var Graph = {
 		.attr("font-size", 11)
 		.attr("fill", "black")
 		.attr('opacity', 0)
+		.attr('class', 'label')
 		.attr('id', function(d, i){
 			return i;
 		})
@@ -160,6 +162,12 @@ var Graph = {
 				.text(Graph.hash_keys[this.id]);
 			});
 		});
-},
+	},
 
+	killBarChart: function() {
+		d3.selectAll('.bar')
+			.transition()
+			.duration(500)
+			.attr('height', 0);
+	}
 };

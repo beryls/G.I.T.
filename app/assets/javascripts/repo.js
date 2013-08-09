@@ -93,13 +93,10 @@ var Repo = {
 		}
 
 		$('#repos_container').animate({
-			height: 0
+			height: 0,
+			padding: 0
 		}, time, function() {
-			$(this).animate({
-				padding: 0
-			}, 100, function(){
-				$(this).remove();
-			});
+			$(this).remove();
 		});
 	},
 
