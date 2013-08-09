@@ -133,5 +133,7 @@ var User = {
 			.duration(1250)
 			.attr('opacity', 1)
 			.attr('y', 100);
+
+			Graph.renderGraphs();
 	},
 };
