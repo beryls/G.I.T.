@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 		user.loadRepos
 		user.linesOfCode
 		user.userLinesByLanguage
+		user.userPercentByLanguage
 		return user
 	end
 
@@ -66,7 +67,16 @@ class User < ActiveRecord::Base
 			total_lines_by_language.each do |language, lines|
 				user.lines_by_language[language] = lines
 			end
-			self.save
-				
+			self.save			
 	end	
+
+	def userPercentByLanguage
+		user = self
+		total_lines = self.lines_written.to_f
+		languages = self.lines_by_language
+		languages.each do |language, lines|
+			user.percent_by_language[language] = lines.to_f/total_lines * 100
+		end
+		self.save
+	end
 end

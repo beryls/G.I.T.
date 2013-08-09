@@ -50,7 +50,7 @@ var Graph = {
 		.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
  
 	var yScale = d3.scale.pow().exponent(0.2)
-		.range([0, Math.pow(h,0.35)]);
+		.range([0, Math.pow(h,0.35 )]);
 
 	svg.selectAll("rect")
 	.data(Graph.hash_values)
