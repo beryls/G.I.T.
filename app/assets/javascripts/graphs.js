@@ -3,7 +3,7 @@ var Graph = {
 	languages: {},
   hash_keys: [],
   hash_values: [],
-  total_lines: Graphs.lineCount(),
+  total_lines: this.lineCount(),
 
   setHashKeyPairs: function() {
 		for (var key in this.languages) {
@@ -53,57 +53,57 @@ var Graph = {
 		var h = 300;
 		var w = 440;
 
-		svg = this.renderBarGraphCanvas();
+	svg = this.renderBarGraphCanvas();
 
-		var xScale = d3.scale.ordinal()
-			.domain(d3.range(Graph.hash_values.length))
-			.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
+	var xScale = d3.scale.ordinal()
+		.domain(d3.range(Graph.hash_values.length))
+		.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
 
-		var yScale = d3.scale.log()
-			.range([0, h/10]);
+	var yScale = d3.scale.pow().exponent(0.2)
+		.range([0, Math.pow(h,0.35)]);
 
-		svg.selectAll("rect")
-		.data(Graph.hash_values)
-		.enter()
-		.append("rect")
-		.attr('class', 'bar')
-		.attr("x", function(d, i) {
-			if(Graph.hash_values.length === 1) {
-				return w/2 - 35;
-			} else {
-				return xScale(i);
-			}
-		})
-		.attr('ry', 2)
-		.attr('y', h)
-		.attr("width", function() {
-			if(Graph.hash_values.length === 1) {
-				return 70;
-			} else {
-				return xScale.rangeBand();
-			}
-		})
-		.attr('height', 0)
-		.attr('id', function(d, i) {
-			return i;
-	  })
-		.attr("fill", function(d, i) {
-			return Repo.repoColor(Graph.hash_keys[i]);
-		})
-		.transition()
-		.delay(function(d, i){
-			return 500 + 100 * i;
-		})
-		.duration(1000)
-		.attr("height", function(d) {
-			return yScale(d);
-		})
-		.attr("y", function(d) {
-			return h - yScale(d);
-		})
-		.each('end', function(){
-			d3.select(this)
-			.on('mouseenter', function() {
+	svg.selectAll("rect")
+	.data(Graph.hash_values)
+	.enter()
+	.append("rect")
+	.attr('class', 'bar')
+	.attr("x", function(d, i) {
+		if(Graph.hash_values.length === 1) {
+			return w/2 - 35;
+		} else {
+			return xScale(i);
+		}
+	})
+	.attr('ry', 2)
+	.attr('y', h)
+	.attr("width", function() {
+		if(Graph.hash_values.length === 1) {
+			return 70;
+		} else {
+			return xScale.rangeBand();
+		}
+	})
+	.attr('height', 0)
+	.attr('id', function(d, i) {
+		return i;
+  })
+	.attr("fill", function(d, i) {
+		return Repo.repoColor(Graph.hash_keys[i]);
+	})
+	.transition()
+	.delay(function(d, i){
+		return 500 + 100 * i;
+	})
+	.duration(1000)
+	.attr("height", function(d) {
+		return yScale(d);
+	})
+	.attr("y", function(d) {
+		return h - yScale(d);
+	})
+	.each('end', function(){
+		d3.select(this)
+		.on('mouseenter', function() {
 				d3.select(this)
 					.transition()
 					.duration(100)
