@@ -1,12 +1,11 @@
-<h1>Git It Together!</h1>
-
 <h4>Find a GitHub user</h4>
 <%= form_tag root_path, method: 'get' do %>
   <p>
-    <%= text_field_tag :q, params[:q] %>
+    <%= text_field_tag :q, params[:q], id: 'search-field'%>
     <%= submit_tag "Search", name: nil %>
   </p>
 <% end %>
+
 
 <% if current_user %>
   <% if params[:q] %>
