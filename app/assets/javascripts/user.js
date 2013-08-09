@@ -24,7 +24,7 @@ var User = {
 					height: 200,
 					opacity: 1,
 					padding: 5
-				},1000);
+				},500);
 
 		// appends svg canvas to profile box div
 		var profile = d3.select('#profile_box')
@@ -42,7 +42,7 @@ var User = {
 			.attr('height', 0)
 			.attr('width', 200)
 			.transition()
-			.duration(1250)
+			.duration(500)
 			.attr('height', 200)
 			.attr('opacity', color)
 			.each('end', function(){
@@ -61,9 +61,11 @@ var User = {
 				})
 				.on('click', function() {
 					if(!d3.select('#repos_container')[0][0]) {
+						Graph.killBarGraph();
 						Repo.renderRepoGrid(repos);
 					} else {
 						Repo.killRepoGrid();
+						Graph.renderGraphs(user['lines_by_language']);
 					}
 					if(!d3.select('#repos_count')[0][0] && !d3.select('#lines_written')[0][0]) {
 						d3.select('#user_title')
@@ -134,6 +136,6 @@ var User = {
 			.attr('opacity', 1)
 			.attr('y', 100);
 
-			Graph.renderGraphs();
+		Graph.renderGraphs(user['lines_by_language']);			
 	},
 };
