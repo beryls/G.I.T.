@@ -5,7 +5,7 @@ var User = {
 		var user = $.parseJSON(user_json),
 			repos = $.parseJSON(repos_json),
 			square = 60;
-
+		console.log(user);
 		this.renderProfileBox(user, repos.length);
 		Repo.renderRepoGrid(repos);
 

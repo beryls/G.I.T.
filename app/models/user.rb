@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 	has_many :repos
 	has_many :portfolios
-	attr_accessible :name, :login, :email, :avatar_url, :access_token, :repos_count
+	attr_accessible :name, :login, :email, :avatar_url, :access_token, :repos_count, :lines_written, :percent_by_language, :lines_by_language
 
 	def self.updateOrCreate(info)
 		if(User.find_by_login(info[:login]))
@@ -41,14 +41,12 @@ class User < ActiveRecord::Base
 		lines = Rails.cache.fetch("languages-lookups-#{self.login}") do
 			total_lines = 0
 			self.repos.each do |repo|
-				result = JSON.parse(RestClient.get(repo['languages_url'], params: {access_token: ENV['ACCESS_TOKEN']}))
-				result.each do |language, lines|
-					total_lines += lines
+				repo.languages.each do |language, repo_lines|
+					total_lines += repo_lines.to_i
 				end
 			end
-			return total_lines
+			total_lines
 		end
-		puts lines
-		self.lines_written = lines
+		self.update_attributes(lines_written: lines)
 	end
 end
