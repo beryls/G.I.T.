@@ -61,6 +61,7 @@ var User = {
 				})
 				.on('click', function() {
 					if(!d3.select('#repos_container')[0][0]) {
+						Graph.killBarGraph();
 						Repo.renderRepoGrid(repos);
 					} else {
 						Repo.killRepoGrid();
@@ -118,8 +119,6 @@ var User = {
 							.attr('y', 100);
 					}
 				});
-				console.log(user);
-				
 			});
 		
 		// appends name or username to profile box
@@ -137,6 +136,6 @@ var User = {
 			.attr('opacity', 1)
 			.attr('y', 100);
 
-			
+		Graph.renderGraphs(user['lines_by_language']);			
 	},
 };

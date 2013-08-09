@@ -54,15 +54,19 @@ class User < ActiveRecord::Base
 	end
 
 	def userLinesByLanguage
-			user = self
-			linesByLanguage = {}
+			total_lines_by_language = {}
 			self.repos.each do |repo|
-				repo.languages.each do |language, repo_lines|
-					linesByLanguage[language] ||= 0;
-					linesByLanguage[language] += repo_lines.to_i;
+				repo.languages.each do |language, lines|
+					total_lines_by_language[language] ||= 0
+					total_lines_by_language[language] += lines.to_i
 				end
 			end
-			user.lines_by_language = linesByLanguage
+
+			user = self
+			total_lines_by_language.each do |language, lines|
+				user.lines_by_language[language] = lines
+			end
+			self.save
 				
 	end	
 end

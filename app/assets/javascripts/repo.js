@@ -59,11 +59,14 @@ var Repo = {
 
 	renderRepoGridCanvas: function(h,w, time) {
 
-		$('<div>').css('height', 0)
+		$('<div>')
+			.css('height', 0)
+			.css('opacity', 0)
 			.attr('id', 'repos_container')
 			.appendTo('body')
 			.animate({
-				height: h
+				height: h,
+				opacity: 1
 			}, time);
 
 		var svg = d3.select('#repos_container')

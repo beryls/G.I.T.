@@ -12,14 +12,10 @@ var Graph = {
   },
 
 	renderGraphs: function(user_languages) {
-    $('<div>').css('height', 300)
-      .css('width', 1000)
-      .css('padding-bottom', 0)
-      .attr('id', 'graphs_container')
-      .appendTo('body')
-      .animate({
-				height: 300
-			}, 1000);
+		$('<div>').css('height', 310)
+			.css('width', 910)
+			.attr('id', 'graphs_container')
+			.appendTo('body');
 
     this.languages = user_languages;
     this.setHashKeyPairs();
@@ -29,17 +25,23 @@ var Graph = {
 
   renderBarGraphCanvas: function() {
 
-    var svg = d3.select('#graphs_container')
-      .append('svg')
-      .attr('height', 300)
-      .attr('width', 500);
+		$('<div>').css('height', 300)
+      .css('width', 440)
+      .attr('id', 'bar_graph_container')
+      .appendTo('#graphs_container');
 
+    var svg = d3.select('#bar_graph_container')
+      .append('svg')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('height', 300)
+      .attr('width', 440);
     return svg;
   },
 
 	renderBarGraph: function() {
 		var h = 300;
-		var w = 500;
+		var w = 440;
 
 	svg = this.renderBarGraphCanvas();
 
@@ -164,10 +166,36 @@ var Graph = {
 		});
 	},
 
-	killBarChart: function() {
+	killBarGraph: function() {
 		d3.selectAll('.bar')
 			.transition()
-			.duration(500)
-			.attr('height', 0);
+			.duration(750)
+			.ease('linear')
+			.attr('y', 30)
+			.attr('height', 0)
+			.each('end', function() {
+				d3.select(this)
+				.remove();
+			});
+
+		d3.selectAll('.label')
+			.transition()
+			.duration(750)
+			.attr('y', -5)
+			.each('end', function() {
+				d3.select(this)
+				.remove();
+			});
+
+		$('#graphs_container')
+			.animate({
+				height: 0,
+				padding: 0
+			}, 750, function() {
+				$(this).remove();
+			});
+
+		this.hash_keys = [];
+		this.hash_values = [];
 	}
 };
