@@ -1,12 +1,12 @@
-<h1>Git It Together!</h1>
+<div id = "search">
+  <%= form_tag root_path, method: 'get' do %>
+    <p>
+      <%= text_field_tag :q, params[:q], {placeholder: 'Find a Github User', id: 'search_field'}%>
+      <%= submit_tag "Search", name: nil %>
+    </p>
+  <% end %>
+</div>
 
-<h4>Find a GitHub user</h4>
-<%= form_tag root_path, method: 'get' do %>
-  <p>
-    <%= text_field_tag :q, params[:q] %>
-    <%= submit_tag "Search", name: nil %>
-  </p>
-<% end %>
 
 <% if current_user %>
   <% if params[:q] %>
