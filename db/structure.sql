@@ -167,7 +167,10 @@ CREATE TABLE users (
     access_token character varying(255),
     repos_count integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    lines_written integer,
+    lines_by_language hstore,
+    percent_by_language hstore
 );
 
 
@@ -274,3 +277,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130806212138');
 INSERT INTO schema_migrations (version) VALUES ('20130807031642');
 
 INSERT INTO schema_migrations (version) VALUES ('20130808151505');
+
+INSERT INTO schema_migrations (version) VALUES ('20130808234739');

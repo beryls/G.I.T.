@@ -8,7 +8,6 @@ var User = {
 
 		this.renderProfileBox(user, repos.length);
 		Repo.renderRepoGrid(repos);
-		renderGraphs();
 
 	},
 
@@ -82,5 +81,17 @@ var User = {
 			.duration(1250)
 			.attr('opacity', 1)
 			.attr('y', 80);
+		profile.append('text')
+			.text('Lines:' + user.lines_written)
+			.attr('opacity',0)
+			.attr('stroke', 'black')
+			.attr('x', 100)
+			.attr('y', 0)
+			.attr('text-anchor', 'middle')
+			.attr('font-size', 20)
+			.transition()
+			.duration(1250)
+			.attr('opacity', 1)
+			.attr('y', 110);
 	},
 };

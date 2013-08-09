@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 			user = User.create(info)
 		end
 		user.loadRepos
+		user.linesOfCode
 		return user
 	end
 
@@ -37,16 +38,17 @@ class User < ActiveRecord::Base
 	end
 
 	def linesOfCode
-		result = Rails.cache.fetch("linesOfCode-user-#{self.id}", expires_in: 1.hour) do
-			JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos", params: {access_token: ENV['ACCESS_TOKEN']}))
-		end
-		total_lines = 0
-		result.each do |repo|
-			languages = JSON.parse(RestClient.get(repo['languages_url']))
-			languages.each do |language, lines|
-				total_lines += lines
+		lines = Rails.cache.fetch("languages-lookups-#{self.login}") do
+			total_lines = 0
+			self.repos.each do |repo|
+				result = JSON.parse(RestClient.get(repo['languages_url'], params: {access_token: ENV['ACCESS_TOKEN']}))
+				result.each do |language, lines|
+					total_lines += lines
+				end
 			end
+			return total_lines
 		end
-		return total_lines
+		puts lines
+		self.lines_written = lines
 	end
 end
