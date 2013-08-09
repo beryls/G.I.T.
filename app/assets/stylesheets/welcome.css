@@ -1,4 +1,10 @@
 #search_field {
 	height: 25px;
-	width: 200px;
+	width: 225px;
+}
+
+#search {
+	height: 50px;
+	text-align: center;
+	margin-top: 40px;
 }
