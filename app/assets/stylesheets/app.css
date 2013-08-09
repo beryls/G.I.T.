@@ -2,3 +2,36 @@ html {
 	font-family: 'Roboto Condensed', sans-serif;
 }
 
+a {
+	color: black;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+a:hover {
+	color: #303030;
+	text-shadow: -1px -1px 1px #b7b7b7;
+}
+a:visited {text-decoration: none;}
+a:active {text-decoration: none;}
+a:link {text-decoration: none;}
+
+#navbar{
+	height: 60px;
+	padding-left: 20px;
+	text-align: center;
+}
+
+#nav_title {
+	float: left;
+	margin-right: 20px;
+	font-size: 25px;
+	position: absolute;
+}
+
+.nav_button {
+	display: inline-block;
+	margin: 5px 30px 0 0;
+	font-size: 20px;
+}
