@@ -329,16 +329,16 @@ var Graph = {
                     var y = c[1];
                     var dist = Math.sqrt(x*x + y*y);
                     console.log(dist);
-                    return "translate(" + (x/h * outerRadius * 6) +  ',' + (y/h * outerRadius * 6) +  ")";
+                    return "translate(" + (x/dist * (outerRadius + 15)) +  ',' + (y/dist * (outerRadius + 15)) +  ")";
                 }
             )
         .attr("dy", ".4em")
-        .attr("text-anchor", function(d)
-            {
-                return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start";
-            }
-        )
-        // .attr("text-anchor", "middle")
+        // .attr("text-anchor", function(d)
+        //     {
+        //         return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start";
+        //     }
+        // )
+        .attr("text-anchor", "middle")
         .text(function(d, i) {
           return Math.round(d.value/(Graph.total_lines) * 100) + "%";
         })
