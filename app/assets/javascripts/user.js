@@ -35,6 +35,10 @@ var User = {
 			.attr('height', profile_h)
 			.attr('width', profile_w);
 
+		profile.append('span')
+			.attr('class', 'glyphicon chevron-down')
+			.attr('fill', 'black');
+
 
 		// appends colored rectangle to svg canvas
 		// this is active space for clicking and text

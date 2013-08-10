@@ -41,12 +41,10 @@ var Graph = {
 
 		$('<div>').css('height', 0)
       .css('width', 480)
-      .css('opacity', 0)
       .attr('id', 'bar_graph_container')
       .appendTo('#graphs_container')
       .animate({
 				height: 300,
-				opacity: 1
       },1250);
 
     var svg = d3.select('#bar_graph_container')
@@ -103,7 +101,7 @@ var Graph = {
 	})
 	.transition()
 	.delay(function(d, i){
-		return 500 + 100 * i;
+		return 100 * i;
 	})
 	.duration(1000)
 	.attr("height", function(d) {
@@ -155,7 +153,7 @@ var Graph = {
 		})
 		.transition()
 		.delay(function(d, i) {
-			return 500 + 100 * i;
+			return 100 * i;
 		})
 		.duration(1000)
 		.attr("y", function(d) {
