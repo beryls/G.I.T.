@@ -101,7 +101,7 @@ var Graph = {
 	})
 	.transition()
 	.delay(function(d, i){
-		return 100 * i;
+		return 500 + 100 * i;
 	})
 	.duration(1000)
 	.attr("height", function(d) {
@@ -153,7 +153,7 @@ var Graph = {
 		})
 		.transition()
 		.delay(function(d, i) {
-			return 100 * i;
+			return 500 + 100 * i;
 		})
 		.duration(1000)
 		.attr("y", function(d) {
@@ -279,7 +279,7 @@ var Graph = {
         })
         .transition()
          .delay(function(d, i) {
-          return 100 * i;
+          return 500 + 50 * i;
          })
          .duration(1000)
          .attr("d", arc)
@@ -320,6 +320,7 @@ var Graph = {
         // .attr("transform", function(d) {
         //   return "translate(" + arc.centroid(d) + ")";
         // })
+				.attr('opacity', 0)
         .attr("transform", function(d)
                 {
                     var c = arc.centroid(d);
@@ -343,6 +344,10 @@ var Graph = {
         })
         .attr("font-family", "sans-serif")
         .attr("font-size", "14")
-        .attr("fill", "black");
+        .attr("fill", "black")
+        .transition()
+        .delay(1250)
+        .duration(1000)
+        .attr('opacity', 1);
   }
 };
