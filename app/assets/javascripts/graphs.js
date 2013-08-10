@@ -3,7 +3,8 @@ var Graph = {
 	languages: {},
   hash_keys: [],
   hash_values: [],
-  total_lines: this.lineCount(),
+  hash_ints: [],
+  total_lines: 0,
 
   setHashKeyPairs: function() {
 		for (var key in this.languages) {
@@ -12,23 +13,26 @@ var Graph = {
     }
   },
 
-  lineCount: function() {
-	  var lines = 0;
-	  for (i = 0; i < this.hash_values.length; i++) {
-	    lines += parseInt(this.hash_values[i]);
-	  }
-	  return lines;
+  valueConvert: function() {
+		hash_ints = [];
+		total_lines = 0;
+		for (i = 0; i < this.hash_values.length; i++) {
+			var lines = parseInt(this.hash_values[i]);
+			Graph.hash_ints.push(lines);
+			Graph.total_lines += lines;
+		}
 	},
 
 	renderGraphs: function(user_languages) {
+
 		$('<div>').css('height', 310)
-			.css('width', 910)
+			.css('width', 1000)
 			.attr('id', 'graphs_container')
-			.appendTo('body');
+			.appendTo('#body_container');
 
     this.languages = user_languages;
     this.setHashKeyPairs();
-    this.lineCount();
+    this.valueConvert();
     this.renderBarGraph();
     this.renderPieChart();
   },
@@ -36,7 +40,7 @@ var Graph = {
   renderBarGraphCanvas: function() {
 
 		$('<div>').css('height', 0)
-      .css('width', 440)
+      .css('width', 480)
       .css('opacity', 0)
       .attr('id', 'bar_graph_container')
       .appendTo('#graphs_container')
@@ -49,20 +53,23 @@ var Graph = {
       .append('svg')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('height', 300)
-      .attr('width', 440);
+      .attr('height', 295)
+      .attr('width', 480);
     return svg;
   },
 
 	renderBarGraph: function() {
 		var h = 300;
-		var w = 440;
+		var w = 480;
 
 	svg = this.renderBarGraphCanvas();
 
 	var xScale = d3.scale.ordinal()
 		.domain(d3.range(Graph.hash_values.length))
 		.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
+
+	console.log(d3.max(this.hash_ints));
+	console.log(this.hash_ints);
 
 	var yScale = d3.scale.pow().exponent(0.2)
 		.range([0, Math.pow(h,0.35 )]);
@@ -79,7 +86,6 @@ var Graph = {
 			return xScale(i);
 		}
 	})
-	.attr('ry', 2)
 	.attr('y', h)
 	.attr("width", function() {
 		if(Graph.hash_values.length === 1) {
@@ -216,22 +222,27 @@ var Graph = {
 
 	renderPieChartCanvas: function() {
 
-    $('<div>').css('height', 300)
-      .css('width', 440)
+    $('<div>').css('height', 0)
+      .css('width', 480)
+      .css('opacity', 0)
       .attr('id', 'pie_chart_container')
-      .appendTo('#graphs_container');
+      .appendTo('#graphs_container')
+      .animate({
+				height: 300,
+				opacity: 1
+      }, 1250);
 
     var svg = d3.select('#pie_chart_container')
       .append('svg')
       .attr('height', 300)
-      .attr('width', 440);
+      .attr('width', 480);
 
     return svg;
   },
 
   renderPieChart: function() {
     var h = 300;
-    var w = 440;
+    var w = 480;
 
     svg = this.renderPieChartCanvas();
 
@@ -308,16 +319,32 @@ var Graph = {
 
     //Labels
     arcs.append("text")
-        .attr("transform", function(d) {
-          return "translate(" + arc.centroid(d) + ")";
-        })
-        .attr("text-anchor", "middle")
-        .text(function(d) {
-        	console.log(Graph.total_lines);
+        // .attr("transform", function(d) {
+        //   return "translate(" + arc.centroid(d) + ")";
+        // })
+        .attr("transform", function(d)
+                {
+                    var c = arc.centroid(d);
+                    console.log(c);
+                    var x = c[0];
+                    var y = c[1];
+                    var dist = Math.sqrt(x*x + y*y);
+                    console.log(dist);
+                    return "translate(" + (x/h * outerRadius * 6) +  ',' + (y/h * outerRadius * 6) +  ")";
+                }
+            )
+        .attr("dy", ".4em")
+        .attr("text-anchor", function(d)
+            {
+                return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start";
+            }
+        )
+        // .attr("text-anchor", "middle")
+        .text(function(d, i) {
           return Math.round(d.value/(Graph.total_lines) * 100) + "%";
         })
         .attr("font-family", "sans-serif")
-        .attr("font-size", "11px")
-        .attr("fill", "white");
+        .attr("font-size", "14")
+        .attr("fill", "black");
   }
 };

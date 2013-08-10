@@ -1,6 +1,6 @@
 function renderGraphs() {
   $('<div>').css('height', 310)
-    .css('width', 910)
+    .css('width', 1000)
     .attr('id', 'graphs_container')
     .appendTo('body');
 
@@ -11,14 +11,14 @@ function renderGraphs() {
 function renderBarGraphCanvas() {
 
   $('<div>').css('height', 300)
-    .css('width', 440)
+    .css('width', 490)
     .attr('id', 'bar_graph_container')
     .appendTo('#graphs_container');
 
   var svg = d3.select('#bar_graph_container')
     .append('svg')
     .attr('height', 300)
-    .attr('width', 440);
+    .attr('width', 490);
 
   return svg;
 }
@@ -32,14 +32,14 @@ function renderBarGraph() {
 function renderPieChartCanvas() {
 
   $('<div>').css('height', 300)
-    .css('width', 440)
+    .css('width', 490)
     .attr('id', 'pie_chart_container')
     .appendTo('#graphs_container');
 
   var svg = d3.select('#pie_chart_container')
     .append('svg')
     .attr('height', 300)
-    .attr('width', 440);
+    .attr('width', 490);
 
   return svg;
 }

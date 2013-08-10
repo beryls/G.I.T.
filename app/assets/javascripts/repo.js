@@ -14,7 +14,7 @@ var Repo = {
 			.data(repos)
 			.enter()
 			.append('rect')
-			.attr('rx', 3)
+			.attr('rx', 0)
 			.attr('x', function(d, i){
 				return (i % 15) * square;
 			})
@@ -46,13 +46,13 @@ var Repo = {
 					})
 					.transition()
 					.duration(600)
-					.attr('rx', 25);
+					.attr('rx', 20);
 				})
 				.on('mouseleave', function() {
 				d3.select(this)
 					.transition()
 					.duration(1000)
-					.attr('rx', 3)
+					.attr('rx', 0)
 					.attr('fill', function(d) {
 						return Repo.repoColor(d.main_language);
 					});
@@ -66,7 +66,7 @@ var Repo = {
 			.css('height', 0)
 			.css('opacity', 0)
 			.attr('id', 'repos_container')
-			.appendTo('body')
+			.appendTo('#body_container')
 			.animate({
 				height: h,
 				opacity: 1

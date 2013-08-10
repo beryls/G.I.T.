@@ -2,6 +2,10 @@ html {
 	font-family: 'Roboto Condensed', sans-serif;
 }
 
+body {
+	background: url('darkdenim3.png');
+}
+
 a {
 	color: black;
 	-webkit-transition: all 0.5s ease-in-out;
@@ -10,29 +14,48 @@ a {
 	transition: all 0.5s ease-in-out;
 }
 a:hover {
-	color: #646464;
+	text-shadow: -1px -1px 1px rgba(43, 43, 43, 0.5);
 }
 a:visited {text-decoration: none;}
 a:active {text-decoration: none;}
 a:link {text-decoration: none;}
 
+#body_container {
+	margin: auto;
+	margin-top: -70px;
+	padding-top: 100px;
+	padding-bottom: 50px;
+	width: 1100px;
+	height: 850px;
+	background: rgba(70, 91, 94, 0.6);
+	z-index: -10;
+}
+
 #navbar{
 	height: 60px;
 	padding-left: 20px;
 	text-align: center;
+	background: #5f7c81;
+	margin-left: -15px;
+	margin-right: -15px;
+	position: relative;
+	z-index: 3;
 }
 
 #nav_title {
 	float: left;
-	margin-right: 20px;
+	margin-top: -10px;
+	margin-left: 10px;
 	font-size: 25px;
 	position: absolute;
+	font-family: 'Cabin Condensed', sans-serif;
+
 }
 
 .nav_button {
 	display: inline-block;
-	margin: 5px 30px 0 0;
-	font-size: 20px;
+	margin: 12px 30px 0 0;
+	font-size: 25px;
 }
 
 #search_bar {
