@@ -13,7 +13,7 @@ module GIT
   class Application < Rails::Application
 
     # For Redis
-    config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 300.minutes }
+    config.cache_store = :redis_store, "redis://http://git-it-together.herokuapp.com/0/cache", { expires_in: 300.minutes }
 
 
 
