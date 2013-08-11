@@ -4,7 +4,7 @@ var Graph = {
   hash_keys: [],
   hash_values: [],
   hash_ints: [],
-  total_lines: 0,
+  total_bytes: 0,
 
   setHashKeyPairs: function() {
 		for (var key in this.languages) {
@@ -15,11 +15,11 @@ var Graph = {
 
   valueConvert: function() {
 		hash_ints = [];
-		total_lines = 0;
+		total_bytes = 0;
 		for (i = 0; i < this.hash_values.length; i++) {
-			var lines = parseInt(this.hash_values[i]);
-			Graph.hash_ints.push(lines);
-			Graph.total_lines += lines;
+			var bytes = parseInt(this.hash_values[i]);
+			Graph.hash_ints.push(bytes);
+			Graph.total_bytes += bytes;
 		}
 	},
 
@@ -51,7 +51,7 @@ var Graph = {
       .append('svg')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('height', 295)
+      .attr('height', 300)
       .attr('width', 480);
 
       svg.append('span')
@@ -69,8 +69,14 @@ var Graph = {
 			.domain(d3.range(Graph.hash_values.length))
 			.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
 
-		var yScale = d3.scale.pow().exponent(0.2)
-			.range([0, Math.pow(h, 0.35)]);
+		console.log(d3.max(this.hash_ints));
+
+		var exp_calc = 1/(Math.log(d3.max(this.hash_ints))/Math.log(250));
+
+		console.log(exp_calc);
+
+		var yScale = d3.scale.pow().exponent(exp_calc)
+			.range([0, 1]);
 
 		svg.selectAll("rect")
 		.data(Graph.hash_values)
@@ -261,7 +267,7 @@ var Graph = {
               .transition()
               .duration(500)
               .attr("fill", Repo.repoHover(Graph.hash_keys[this.id]))
-              .attr("d", arc.outerRadius(outerRadius + 15))
+              .attr("d", arc.outerRadius(outerRadius + 10))
               arcs.append("text")
               .attr("transform", function()
                 {
@@ -269,19 +275,19 @@ var Graph = {
                     var x = c[0];
                     var y = c[1];
                     var dist = Math.sqrt(x*x + y*y);
-                    return "translate(" + (x/dist * (outerRadius + 20)) +  ',' + (y/dist * (outerRadius + 20)) +  ")";
+                    return "translate(" + (x/dist * (outerRadius + 15)) +  ',' + (y/dist * (outerRadius + 15)) +  ")";
                 }
             	)
             	.attr('opacity', 0)
               .attr("text-anchor", "middle")
               .attr("class", "percent-label")
-              .text(Graph.hash_keys[this.id] + ": " + (d.value/Graph.total_lines * 100).toFixed(2) + "%")
+              .text(Graph.hash_keys[this.id] + ": " + (d.value/Graph.total_bytes * 100).toFixed(2) + "%")
               .attr("font-family", "sans-serif")
 							.attr("font-size", "18")
 							.attr("fill", "black")
 							.transition()
 							.duration(3000)
-							.attr('opacity', 0.3);
+							.attr('opacity', 3/Graph.hash_keys.length);
 							})
            .on("mouseout", function(d, i) {
              d3.select(this)
