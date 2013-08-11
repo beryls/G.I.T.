@@ -38,6 +38,7 @@ var Repo = {
 			.each('end', function() {
 				d3.select(this)
 				.on('mouseenter', function() {
+					Repo.displayRepoInfo();
 					d3.select(this)
 						.transition()
 						.duration(100)
@@ -68,6 +69,17 @@ var Repo = {
 					});
 				});
 			});
+	},
+
+	displayRepoInfo: function() {
+		var info_box_h = 240,
+			info_box_w = 890;
+
+		d3.select('#info_box')
+		.append('text')
+		.attr('x', info_box_w/2)
+		.attr('y', info_box_h/2)
+		.text('hello');
 	},
 
 	renderRepoGridCanvas: function(h,w, time) {
