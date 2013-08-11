@@ -286,68 +286,40 @@ var Graph = {
          .each("end", function() {
            d3.select(this)
            .on("mouseenter", function(d, i) {
-           	console.log(d)
              d3.select(this)
               .transition()
               .duration(500)
               .attr("fill", Repo.repoHover(Graph.hash_keys[this.id]))
-              .attr("d", arc.outerRadius(outerRadius + 15));
+              .attr("d", arc.outerRadius(outerRadius + 15))
+              arcs.append("text")
+              .attr("transform", function()
+                {
+                    var c = arc.centroid(d);
+                    var x = c[0];
+                    var y = c[1];
+                    var dist = Math.sqrt(x*x + y*y);
+                    return "translate(" + (x/dist * (outerRadius + 20)) +  ',' + (y/dist * (outerRadius + 20)) +  ")";
+                }
+            	)
+            	.attr('opacity', 0)
+              .attr("text-anchor", "middle")
+              .attr("class", "percent-label")
+              .text(Graph.hash_keys[this.id] + ": " + (d.value/Graph.total_lines * 100).toFixed(2) + "%")
+              .attr("font-family", "sans-serif")
+			        .attr("font-size", "14")
+			        .attr("fill", "black")
+			        .transition()
+			        .duration(3000)
+			        .attr('opacity', 1);
               })
            .on("mouseout", function(d, i) {
              d3.select(this)
                 .transition()
                 .duration(1000)
               .attr("fill", Repo.repoColor(Graph.hash_keys[this.id]))
-              .attr("d", arc.outerRadius(outerRadius));
+              .attr("d", arc.outerRadius(outerRadius))
+              d3.selectAll(".percent-label").remove();
             });
           });
-
-
-        // .duration(1000)
-       //  .on("mouseover", function(d, i) {
-       //  d3.select(this)
-       //    .attr("fill", graphs.hover(hash_keys[i]));
-       //  })
-       // .on("mouseout", function(d, i) {
-       //   d3.select(this)
-       //      .transition()
-       //      .duration(250)
-       //    .attr("fill", graphs.color(hash_keys[i]));
-       //  });
-
-    //Labels
-    arcs.append("text")
-        // .attr("transform", function(d) {
-        //   return "translate(" + arc.centroid(d) + ")";
-        // })
-				.attr('opacity', 0)
-        .attr("transform", function(d)
-                {
-                    var c = arc.centroid(d);
-                    console.log(c);
-                    var x = c[0];
-                    var y = c[1];
-                    var dist = Math.sqrt(x*x + y*y);
-                    console.log(dist);
-                    return "translate(" + (x/dist * (outerRadius + 15)) +  ',' + (y/dist * (outerRadius + 15)) +  ")";
-                }
-            )
-        .attr("dy", ".4em")
-        // .attr("text-anchor", function(d)
-        //     {
-        //         return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start";
-        //     }
-        // )
-        .attr("text-anchor", "middle")
-        .text(function(d, i) {
-          return Math.round(d.value/(Graph.total_lines) * 100) + "%";
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "14")
-        .attr("fill", "black")
-        .transition()
-        .delay(1250)
-        .duration(1000)
-        .attr('opacity', 1);
   }
 };
