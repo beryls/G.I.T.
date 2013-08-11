@@ -8,6 +8,8 @@ gem 'rails', '3.2.13'
 gem 'pg'
 
 gem 'activerecord-postgres-hstore'
+
+gem 'rest-client'
 # gem 'redis-rails'
 # gem 'redis'  
 # Gems used only for assets and not required
@@ -51,9 +53,6 @@ group :development, :test do
   gem 'dotenv'
 
   gem 'dotenv-rails'
-
-  gem 'rest-client'
-
 
 end
 
