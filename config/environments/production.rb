@@ -1,6 +1,11 @@
 GIT::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  config.action_dispatch.rack_cache = {
+    metastore:   "redis://git-it-together.herokuapp.com/1/metastore",
+    entitystore: "redis://git-it-together.herokuapp.com/1/entitystore"
+  }
+  
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -20,10 +25,7 @@ GIT::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-
-   require 'redis'
-        uri = URI.parse(ENV["REDISCLOUD_URL"])
-    $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+  config.gem 'redis'
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
