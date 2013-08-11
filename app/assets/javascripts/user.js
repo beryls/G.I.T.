@@ -35,10 +35,6 @@ var User = {
 			.attr('height', profile_h)
 			.attr('width', profile_w);
 
-		profile.append('span')
-			.attr('class', 'glyphicon chevron-down')
-			.attr('fill', 'black');
-
 
 		// appends colored rectangle to svg canvas
 		// this is active space for clicking and text
@@ -48,6 +44,7 @@ var User = {
 			.attr('rx', 0)
 			.attr('height', 0)
 			.attr('width', 240)
+			.attr('id', 'profile_info')
 			.transition()
 			.duration(500)
 			.attr('height', 240)
@@ -70,6 +67,10 @@ var User = {
 					if(!d3.select('#repos_container')[0][0]) {
 						Graph.killBarGraph();
 						Repo.renderRepoGrid(repos, user.login);
+						// $('.profile_box')
+						// 	.animate({
+						// 		margin: '25px '
+						// 	},1250);
 					} else {
 						Repo.killRepoGrid();
 						Graph.renderGraphs(user['lines_by_language']);
@@ -93,7 +94,7 @@ var User = {
 							.attr('opacity', 1)
 							.attr('y', 120);
 						profile.append('text')
-							.text(user.lines_written + " Lines")
+							.text(user.lines_written + " Bytes of Code")
 							.attr('id', 'lines_written')
 							.attr('opacity',0)
 							.attr('stroke', 'black')

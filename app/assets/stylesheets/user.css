@@ -1,9 +1,8 @@
 #profile_box {
 	width: 250px;
 	margin: auto;
-	position: relative;
-	margin-top: 25px;
 	margin-bottom: 70px;
+	margin-top: 25px;
 	background: #5f7c81;
 	opacity:0;
 }

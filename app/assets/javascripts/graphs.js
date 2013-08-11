@@ -122,6 +122,20 @@ var Graph = {
 						.attr('fill', function() {
 							return Repo.repoHover(Graph.hash_keys[this.id]);
 						});
+						svg.append("text")
+						.text(Graph.hash_keys[this.id])
+						.attr("text-anchor", "middle")
+						.attr("x", xScale(this.id) + xScale.rangeBand() / 2)
+						.attr("y", h - yScale(Graph.hash_values[this.id]) - 5)
+						.attr("font-family", "sans-serif")
+						.attr("font-size", 18)
+						.attr("fill", "black")
+						.attr('opacity', 0)
+						.attr('class', 'bar_label')
+						.transition()
+						.duration(250)
+						.attr('opacity', 1);
+
 				});
 				d3.select(this)
 				.on("mouseleave", function() {
@@ -131,60 +145,70 @@ var Graph = {
 					.attr("fill", function(d, i) {
 						return Repo.repoColor(Graph.hash_keys[this.id]);
 					});
+					d3.selectAll('.bar_label')
+						.transition()
+						.duration(1000)
+						.attr('opacity', 0)
+						.each('end', function() {
+							d3.select(this)
+								.remove();
+						});
 				});
 			});
 
 			//Create labels
-			svg.selectAll("text")
-			.data(Graph.hash_values)
-			.enter()
-			.append("text")
-			.text(function(d, i) {
-				return Graph.hash_keys[i];
-			})
-			.attr("text-anchor", "middle")
-			.attr("x", function(d, i) {
-				return xScale(i) + xScale.rangeBand() / 2;
-			})
-			.attr('y', h)
-			.attr("font-family", "sans-serif")
-			.attr("font-size", 11)
-			.attr("fill", "black")
-			.attr('opacity', 0)
-			.attr('id', function(d, i){
-				return i;
-			})
-			.transition()
-			.delay(function(d, i) {
-				return 500 + 100 * i;
-			})
-			.duration(1000)
-			.attr("y", function(d) {
-				return h - yScale(d) - 5;
-			})
-			.attr('opacity', 1)
-			.attr('font-size', 16)
-			.each('end', function() {
-				d3.select(this)
-				.on('mouseenter', function() {
-					d3.select(this)
-					.transition()
-					.duration(250)
-					.attr('y', function() {
-						return h - yScale(Graph.hash_values[this.id]) - 10;
-					})
-					.text(Graph.hash_values[this.id]);
-				})
-				.on('mouseleave', function() {
-					d3.select(this)
-					.transition()
-					.duration(500)
-					.attr('y', function() {
-						return h - yScale(Graph.hash_values[this.id]) - 5;
-					})
-					.text(Graph.hash_keys[this.id]);
-				});
-			});
+			// svg.selectAll("text")
+			// .data(Graph.hash_values)
+			// .enter()
+			// .append("text")
+			// .text(function(d, i) {
+			// 	return Graph.hash_keys[i];
+			// })
+			// .attr("text-anchor", "middle")
+			// .attr("x", function(d, i) {
+			// 	return xScale(i) + xScale.rangeBand() / 2;
+			// })
+			// .attr("y", function(d) {
+			// 	return h - yScale(d) - 5;
+			// })
+			// .attr("font-family", "sans-serif")
+			// .attr("font-size", 11)
+			// .attr("fill", "black")
+			// .attr('opacity', 0)
+			// .attr('id', function(d, i){
+			// 	return i;
+			// })
+			// .transition()
+			// .delay(function(d, i) {
+			// 	return 500 + 100 * i;
+			// })
+			// .duration(1000)
+			// .attr("y", function(d) {
+			// 	return h - yScale(d) - 5;
+			// })
+			// .attr('opacity', 1)
+			// .attr('font-size', 16)
+			// .each('end', function() {
+			// 	d3.select(this)
+			// 	.on('mouseenter', function() {
+			// 		d3.select(this)
+			// 		.transition()
+			// 		.duration(250)
+			// 		.attr('y', function() {
+			// 			return h - yScale(Graph.hash_values[this.id]) - 10;
+			// 		})
+			// 		.text(Graph.hash_values[this.id]);
+			// 	})
+			// 	.on('mouseleave', function() {
+			// 		d3.select(this)
+			// 		.transition()
+			// 		.duration(500)
+			// 		.attr('y', function() {
+			// 			return h - yScale(Graph.hash_values[this.id]) - 5;
+			// 		})
+			// 		.text(Graph.hash_keys[this.id]);
+			// 	});
+			// });
 	},
 
 	killBarGraph: function() {
@@ -246,7 +270,7 @@ var Graph = {
     var h = 300;
     var w = 480;
 
-    svg = this.renderPieChartCanvas();
+    pie_svg = this.renderPieChartCanvas();
 
     var outerRadius = h/2 - 30;
     var innerRadius = 0;
@@ -264,7 +288,7 @@ var Graph = {
     var pie = d3.layout.pie();
 
     //Set up groups
-    var arcs = svg.selectAll("g.arc")
+    var arcs = pie_svg.selectAll("g.arc")
             .data(pie(Graph.hash_values))
             .enter()
             .append("g")
@@ -310,12 +334,12 @@ var Graph = {
               .attr("class", "percent-label")
               .text(Graph.hash_keys[this.id] + ": " + (d.value/Graph.total_lines * 100).toFixed(2) + "%")
               .attr("font-family", "sans-serif")
-			        .attr("font-size", "14")
-			        .attr("fill", "black")
-			        .transition()
-			        .duration(3000)
-			        .attr('opacity', 1);
-              })
+							.attr("font-size", "18")
+							.attr("fill", "black")
+							.transition()
+							.duration(3000)
+							.attr('opacity', 0.3);
+							})
            .on("mouseout", function(d, i) {
              d3.select(this)
                 .transition()
