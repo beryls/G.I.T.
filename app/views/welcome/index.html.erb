@@ -15,7 +15,7 @@
     <% else %>
       <p>Search results for: <%= @search %></p>
       <% @results["users"].each do |result| %>
-        <%= link_to '/select/' + result['login'], method: 'get' do %>
+        <p><%= link_to '/select/' + result['login'], method: 'get' do %>
           <%= result["login"] %>
           <% if result["name"] %>
             <%= " - #{result["name"]}" %></p>
