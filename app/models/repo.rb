@@ -21,6 +21,7 @@ class Repo < ActiveRecord::Base
     end
       repo.getLinesOfCodeByLanguage
       repo.getCollaborators
+      repo.linesOfCode
       return repo
   end
 
@@ -29,7 +30,7 @@ class Repo < ActiveRecord::Base
     self.languages.each do |language, lines|
       total_lines += lines.to_i
     end
-    return total_lines
+    self.total_bytes = total_lines
   end
 
   def percentOfCodeByLanguage
