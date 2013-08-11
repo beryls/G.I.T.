@@ -1,10 +1,10 @@
 GIT::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  config.action_dispatch.rack_cache = {
-    metastore:   "redis://git-it-together.herokuapp.com/1/metastore",
-    entitystore: "redis://git-it-together.herokuapp.com/1/entitystore"
-  }
+  # config.action_dispatch.rack_cache = {
+  #   metastore:   "redis://git-it-together.herokuapp.com/1/metastore",
+  #   entitystore: "redis://git-it-together.herokuapp.com/1/entitystore"
+  # }
   
   # Code is not reloaded between requests
   config.cache_classes = true

@@ -21,11 +21,11 @@ class User < ActiveRecord::Base
 
 
 	def loadRepos
-		result = Rails.cache.fetch("loadRepos-user-#{self.id}", expires_in: 1.hour) do
-			JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos",
+		# result = Rails.cache.fetch("loadRepos-user-#{self.id}", expires_in: 1.hour) do
+			result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos",
 				params: {access_token: ENV['ACCESS_TOKEN'], page: 1, per_page: 100}))
-		end
-		Rails.cache.fetch("update-user-repos-#{self.id}", expires_in: 1.hour) do
+		# end
+		# Rails.cache.fetch("update-user-repos-#{self.id}", expires_in: 1.hour) do
 			result.each do |repo|
 				info = {name: repo['name'],
 									html_url: repo['html_url'],
@@ -36,22 +36,22 @@ class User < ActiveRecord::Base
 				if info[:main_language]
 					self.repos << Repo.updateOrCreate(info)
 				end
-			end
+			# end
 		end
 		return self.repos
 	end
 
 	def linesOfCode
-		lines = Rails.cache.fetch("languages-lookups-#{self.login}") do
+		# lines = Rails.cache.fetch("languages-lookups-#{self.login}") do
 			total_lines = 0
 			self.repos.each do |repo|
 				repo.languages.each do |language, repo_lines|
 					total_lines += repo_lines.to_i
 				end
-			end
+			# end
 			total_lines
 		end
-		self.update_attributes(lines_written: lines)
+		self.update_attributes(lines_written: total_lines)
 	end
 
 	def userLinesByLanguage
