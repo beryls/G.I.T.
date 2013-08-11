@@ -122,7 +122,8 @@ CREATE TABLE repos (
     languages_url character varying(255),
     collaborators_url character varying(255),
     percent_languages hstore,
-    main_language character varying(255)
+    main_language character varying(255),
+    total_bytes integer
 );
 
 
@@ -279,3 +280,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130807031642');
 INSERT INTO schema_migrations (version) VALUES ('20130808151505');
 
 INSERT INTO schema_migrations (version) VALUES ('20130808234739');
+
+INSERT INTO schema_migrations (version) VALUES ('20130811215011');

@@ -89,13 +89,13 @@ var Repo = {
 		var info_box_h = 240,
 			info_box_w = 890;
 		User.removeUserInfo();
-		console.log(repo);
 
 		d3.select('#info_box')
 			.append('text')
 			.text(repo.name)
 			.attr('text-anchor', 'middle')
 			.attr('class', 'repo_title')
+			.attr('stroke', 'black')
 			.attr('x', 445)
 			.attr('y', 260)
 			.attr('font-size', 25)
@@ -103,7 +103,22 @@ var Repo = {
 			.transition()
 			.duration(800)
 			.attr('opacity', 1)
-			.attr('y', 90);
+			.attr('y', 70);
+
+		d3.select('#info_box')
+			.append('text')
+			.text(repo.total_bytes + " Bytes of Code")
+			.attr('stroke', 'black')
+			.attr('text-anchor', 'middle')
+			.attr('class', 'repo_title')
+			.attr('x', 445)
+			.attr('y', 260)
+			.attr('font-size', 20)
+			.attr('opacity', 0)
+			.transition()
+			.duration(800)
+			.attr('opacity', 1)
+			.attr('y', 100);
 	},
 
 	removeRepoInfo: function() {
