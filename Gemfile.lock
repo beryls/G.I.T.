@@ -204,6 +204,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 3.2.13)
   rails-erd
+  redis
   redis-rails
   rest-client
   rspec-rails (~> 2.0)
