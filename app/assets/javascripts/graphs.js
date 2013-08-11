@@ -53,135 +53,138 @@ var Graph = {
       .attr('y', 0)
       .attr('height', 295)
       .attr('width', 480);
+
+      svg.append('span')
+				.attr('class', 'glyphicon glyphicon-chevron-down');
     return svg;
   },
 
 	renderBarGraph: function() {
-		var h = 300;
-		var w = 480;
+		var h = 300,
+		w = 480;
 
-	svg = this.renderBarGraphCanvas();
+		svg = this.renderBarGraphCanvas();
 
-	var xScale = d3.scale.ordinal()
-		.domain(d3.range(Graph.hash_values.length))
-		.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
+		var xScale = d3.scale.ordinal()
+			.domain(d3.range(Graph.hash_values.length))
+			.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
 
-	console.log(d3.max(this.hash_ints));
-	console.log(this.hash_ints);
+		console.log(d3.max(this.hash_ints));
+		console.log(this.hash_ints);
 
-	var yScale = d3.scale.pow().exponent(0.2)
-		.range([0, Math.pow(h,0.35 )]);
+		var yScale = d3.scale.pow().exponent(0.2)
+			.range([0, Math.pow(h,0.35 )]);
 
-	svg.selectAll("rect")
-	.data(Graph.hash_values)
-	.enter()
-	.append("rect")
-	.attr('class', 'bar')
-	.attr("x", function(d, i) {
-		if(Graph.hash_values.length === 1) {
-			return w/2 - 35;
-		} else {
-			return xScale(i);
-		}
-	})
-	.attr('y', h)
-	.attr("width", function() {
-		if(Graph.hash_values.length === 1) {
-			return 70;
-		} else {
-			return xScale.rangeBand();
-		}
-	})
-	.attr('height', 0)
-	.attr('id', function(d, i) {
-		return i;
-  })
-	.attr("fill", function(d, i) {
-		return Repo.repoColor(Graph.hash_keys[i]);
-	})
-	.transition()
-	.delay(function(d, i){
-		return 500 + 100 * i;
-	})
-	.duration(1000)
-	.attr("height", function(d) {
-		return yScale(d);
-	})
-	.attr("y", function(d) {
-		return h - yScale(d);
-	})
-	.each('end', function(){
-		d3.select(this)
-		.on('mouseenter', function() {
-				d3.select(this)
-					.transition()
-					.duration(100)
-					.attr('fill', function() {
-						return Repo.repoHover(Graph.hash_keys[this.id]);
-					});
-			});
-			d3.select(this)
-			.on("mouseleave", function() {
-				d3.select(this)
-				.transition()
-				.duration(1000)
-				.attr("fill", function(d, i) {
-					return Repo.repoColor(Graph.hash_keys[this.id]);
-				});
-			});
-		});
-
-		//Create labels
-		svg.selectAll("text")
+		svg.selectAll("rect")
 		.data(Graph.hash_values)
 		.enter()
-		.append("text")
-		.text(function(d, i) {
-			return Graph.hash_keys[i];
-		})
-		.attr("text-anchor", "middle")
+		.append("rect")
+		.attr('class', 'bar')
 		.attr("x", function(d, i) {
-			return xScale(i) + xScale.rangeBand() / 2;
+			if(Graph.hash_values.length === 1) {
+				return w/2 - 35;
+			} else {
+				return xScale(i);
+			}
 		})
 		.attr('y', h)
-		.attr("font-family", "sans-serif")
-		.attr("font-size", 11)
-		.attr("fill", "black")
-		.attr('opacity', 0)
-		.attr('id', function(d, i){
+		.attr("width", function() {
+			if(Graph.hash_values.length === 1) {
+				return 70;
+			} else {
+				return xScale.rangeBand();
+			}
+		})
+		.attr('height', 0)
+		.attr('id', function(d, i) {
 			return i;
 		})
+		.attr("fill", function(d, i) {
+			return Repo.repoColor(Graph.hash_keys[i]);
+		})
 		.transition()
-		.delay(function(d, i) {
+		.delay(function(d, i){
 			return 500 + 100 * i;
 		})
 		.duration(1000)
-		.attr("y", function(d) {
-			return h - yScale(d) - 5;
+		.attr("height", function(d) {
+			return yScale(d);
 		})
-		.attr('opacity', 1)
-		.attr('font-size', 16)
-		.each('end', function() {
+		.attr("y", function(d) {
+			return h - yScale(d);
+		})
+		.each('end', function(){
 			d3.select(this)
 			.on('mouseenter', function() {
+					d3.select(this)
+						.transition()
+						.duration(100)
+						.attr('fill', function() {
+							return Repo.repoHover(Graph.hash_keys[this.id]);
+						});
+				});
 				d3.select(this)
-				.transition()
-				.duration(250)
-				.attr('y', function() {
-					return h - yScale(Graph.hash_values[this.id]) - 10;
-				})
-				.text(Graph.hash_values[this.id]);
-			})
-			.on('mouseleave', function() {
-				d3.select(this)
-				.transition()
-				.duration(500)
-				.attr('y', function() {
-					return h - yScale(Graph.hash_values[this.id]) - 5;
-				})
-				.text(Graph.hash_keys[this.id]);
+				.on("mouseleave", function() {
+					d3.select(this)
+					.transition()
+					.duration(1000)
+					.attr("fill", function(d, i) {
+						return Repo.repoColor(Graph.hash_keys[this.id]);
+					});
+				});
 			});
-		});
+
+			//Create labels
+			svg.selectAll("text")
+			.data(Graph.hash_values)
+			.enter()
+			.append("text")
+			.text(function(d, i) {
+				return Graph.hash_keys[i];
+			})
+			.attr("text-anchor", "middle")
+			.attr("x", function(d, i) {
+				return xScale(i) + xScale.rangeBand() / 2;
+			})
+			.attr('y', h)
+			.attr("font-family", "sans-serif")
+			.attr("font-size", 11)
+			.attr("fill", "black")
+			.attr('opacity', 0)
+			.attr('id', function(d, i){
+				return i;
+			})
+			.transition()
+			.delay(function(d, i) {
+				return 500 + 100 * i;
+			})
+			.duration(1000)
+			.attr("y", function(d) {
+				return h - yScale(d) - 5;
+			})
+			.attr('opacity', 1)
+			.attr('font-size', 16)
+			.each('end', function() {
+				d3.select(this)
+				.on('mouseenter', function() {
+					d3.select(this)
+					.transition()
+					.duration(250)
+					.attr('y', function() {
+						return h - yScale(Graph.hash_values[this.id]) - 10;
+					})
+					.text(Graph.hash_values[this.id]);
+				})
+				.on('mouseleave', function() {
+					d3.select(this)
+					.transition()
+					.duration(500)
+					.attr('y', function() {
+						return h - yScale(Graph.hash_values[this.id]) - 5;
+					})
+					.text(Graph.hash_keys[this.id]);
+				});
+			});
 	},
 
 	killBarGraph: function() {
@@ -217,6 +220,7 @@ var Graph = {
 		this.hash_keys = [];
 		this.hash_values = [];
 	},
+	
 
 	renderPieChartCanvas: function() {
 

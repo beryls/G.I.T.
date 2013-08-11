@@ -66,5 +66,6 @@ module GIT
     config.assets.version = '1.0'
 
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    
   end
 end

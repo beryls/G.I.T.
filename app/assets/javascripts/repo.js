@@ -49,7 +49,17 @@ var Repo = {
 					.attr('rx', 20);
 				})
 				.on('mouseleave', function() {
-				d3.select(this)
+					d3.select(this)
+					.transition()
+					.duration(1000)
+					.attr('rx', 0)
+					.attr('fill', function(d) {
+						return Repo.repoColor(d.main_language);
+					});
+				})
+				.on('click', function() {
+					window.open(this.__data__.html_url)
+					d3.select(this)
 					.transition()
 					.duration(1000)
 					.attr('rx', 0)
