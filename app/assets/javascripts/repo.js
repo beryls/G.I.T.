@@ -87,14 +87,27 @@ var Repo = {
 
 	displayRepoInfo: function(repo) {
 		var info_box_h = 240,
-			info_box_w = 890;
+			info_box_w = 890,
+			collaborator_text = Repo.getObjSize(repo.collaborators);
+			language_text = Repo.getObjSize(repo.languages);
+		if(collaborator_text === 1) {
+			collaborator_text += ' Creator';
+		} else {
+			collaborator_text += ' Collaborators';
+		}
+		if(language_text === 1) {
+			language_text += ' Language';
+		} else {
+			language_text += ' Languages';
+		}
+
 		User.removeUserInfo();
 
 		d3.select('#info_box')
 			.append('text')
 			.text(repo.name)
 			.attr('text-anchor', 'middle')
-			.attr('class', 'repo_title')
+			.attr('class', 'repo_info')
 			.attr('stroke', 'black')
 			.attr('x', 445)
 			.attr('y', 260)
@@ -110,7 +123,37 @@ var Repo = {
 			.text(repo.total_bytes + " Bytes of Code")
 			.attr('stroke', 'black')
 			.attr('text-anchor', 'middle')
-			.attr('class', 'repo_title')
+			.attr('class', 'repo_info')
+			.attr('x', 445)
+			.attr('y', 260)
+			.attr('font-size', 20)
+			.attr('opacity', 0)
+			.transition()
+			.duration(800)
+			.attr('opacity', 1)
+			.attr('y', 160);
+
+		d3.select('#info_box')
+			.append('text')
+			.text(collaborator_text)
+			.attr('stroke', 'black')
+			.attr('text-anchor', 'middle')
+			.attr('class', 'repo_info')
+			.attr('x', 445)
+			.attr('y', 260)
+			.attr('font-size', 20)
+			.attr('opacity', 0)
+			.transition()
+			.duration(800)
+			.attr('opacity', 1)
+			.attr('y', 130);
+
+		d3.select('#info_box')
+			.append('text')
+			.text(language_text)
+			.attr('stroke', 'black')
+			.attr('text-anchor', 'middle')
+			.attr('class', 'repo_info')
 			.attr('x', 445)
 			.attr('y', 260)
 			.attr('font-size', 20)
@@ -121,9 +164,17 @@ var Repo = {
 			.attr('y', 100);
 	},
 
+	getObjSize: function(object) {
+    var size = 0, key;
+    for (key in object) {
+        if (object.hasOwnProperty(key)) size++;
+    }
+    return size;
+	},
+
 	removeRepoInfo: function() {
 
-		d3.selectAll('.repo_title')
+		d3.selectAll('.repo_info')
 			.attr('opacity', 1)
 			.transition()
 			.duration(400)

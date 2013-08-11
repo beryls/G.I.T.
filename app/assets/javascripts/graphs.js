@@ -67,7 +67,7 @@ var Graph = {
 
 		var xScale = d3.scale.ordinal()
 			.domain(d3.range(Graph.hash_values.length))
-			.rangeRoundBands([20, w - 20], 1/(Graph.hash_values.length * 0.5));
+			.rangeRoundBands([40, w - 40], 1/(Graph.hash_values.length * 0.5));
 
 		console.log(d3.max(this.hash_ints));
 
