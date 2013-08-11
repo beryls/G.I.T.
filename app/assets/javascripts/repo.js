@@ -2,12 +2,14 @@ var Repo = {
 
 	current_repo: "",
 
-	renderRepoGrid: function(repos, login) {
+	renderRepoGrid: function(repos, user) {
+
 
 		var square = 60,
 			h = parseInt((repos.length / 15) + 1) * square,
 			w = 15 * 60,
 			time = repos.length * 10 + 200,
+			login = user.login,
 			svg = this.renderRepoGridCanvas(h,w,time);
 
 		svg.selectAll('rect')
@@ -38,18 +40,30 @@ var Repo = {
 			.each('end', function() {
 				d3.select(this)
 				.on('mouseenter', function() {
-					Repo.displayRepoInfo();
+
+					Repo.displayRepoName(this.__data__.name);
+
 					d3.select(this)
 						.transition()
 						.duration(100)
 						.attr('fill', function(d) {
 							return Repo.repoHover(d.main_language);
 					})
+
 					.transition()
-					.duration(600)
-					.attr('rx', 20);
+					.duration(1000)
+					.attr('rx', 40)
+					.each('end', function() {
+						Repo.removeRepoName();
+						Repo.removeRepoInfo();
+						Repo.displayRepoInfo(this.__data__);
+					});
 				})
 				.on('mouseleave', function() {
+
+					Repo.removeRepoName();
+					
+
 					d3.select(this)
 					.transition()
 					.duration(1000)
@@ -59,7 +73,7 @@ var Repo = {
 					});
 				})
 				.on('click', function() {
-					window.open(this.__data__.html_url)
+					window.open(this.__data__.html_url);
 					d3.select(this)
 					.transition()
 					.duration(1000)
@@ -71,15 +85,39 @@ var Repo = {
 			});
 	},
 
-	displayRepoInfo: function() {
+	displayRepoInfo: function(repo) {
 		var info_box_h = 240,
 			info_box_w = 890;
+		User.removeUserInfo();
+		console.log(repo);
 
 		d3.select('#info_box')
-		.append('text')
-		.attr('x', info_box_w/2)
-		.attr('y', info_box_h/2)
-		.text('hello');
+			.append('text')
+			.text(repo.name)
+			.attr('text-anchor', 'middle')
+			.attr('class', 'repo_title')
+			.attr('x', 445)
+			.attr('y', 260)
+			.attr('font-size', 25)
+			.attr('opacity', 0)
+			.transition()
+			.duration(800)
+			.attr('opacity', 1)
+			.attr('y', 90);
+	},
+
+	removeRepoInfo: function() {
+
+		d3.selectAll('.repo_title')
+			.attr('opacity', 1)
+			.transition()
+			.duration(400)
+			.attr('opacity', 0)
+			.attr('y', 0)
+			.each('end', function() {
+				d3.select(this)
+				.remove();
+			});
 	},
 
 	renderRepoGridCanvas: function(h,w, time) {
@@ -126,6 +164,31 @@ var Repo = {
 		}, time, function() {
 			$(this).remove();
 		});
+	},
+
+	displayRepoName: function(name) {
+		d3.select('#info_box')
+			.append('text')
+			.text(name)
+			.attr('opacity', 0)
+			.attr('class', 'repo_name')
+			.attr('text-anchor', 'middle')
+			.attr('x', 445)
+			.attr('y', 230)
+			.transition()
+			.duration(200)
+			.attr('opacity', 1);
+	},
+
+	removeRepoName: function() {
+		d3.selectAll('.repo_name')
+			.transition()
+			.duration(200)
+			.attr('opacity', 0)
+			.each('end', function(){
+				d3.select(this)
+				.remove();
+			});
 	},
 
 	repoColor: function(lang) {

@@ -72,15 +72,12 @@ var User = {
 				.on('click', function() {
 					if(!d3.select('#repos_container')[0][0]) {
 						Graph.killBarGraph();
-						Repo.renderRepoGrid(repos, user.login);
-					} else {
-						Repo.killRepoGrid();
-						Graph.renderGraphs(user['lines_by_language']);
-					}
-					if(!d3.select('#repos_count')[0][0] && !d3.select('#lines_written')[0][0]) {
+						Repo.renderRepoGrid(repos, user);
 						User.appendUserInfo(user, repos, title);
 						User.expandInfoBox();
 					} else {
+						Repo.killRepoGrid();
+						Graph.renderGraphs(user['lines_by_language']);
 						User.contractInfoBox(title);
 					}
 				});
@@ -120,6 +117,7 @@ var User = {
 			.transition()
 			.duration(400)
 			.attr('opacity', 0)
+			.attr('y', 0)
 			.each('end', function(){
 				d3.select(this)
 				.remove();
@@ -130,6 +128,7 @@ var User = {
 	contractInfoBox: function(title){
 
 		User.removeUserInfo();
+		Repo.removeRepoInfo();
 		
 		$('#profile_box')
 			.animate({
@@ -155,10 +154,11 @@ var User = {
 			.transition()
 			.duration(1250)
 			.attr('opacity', 1)
-			.attr('y', 100);
+			.attr('y', User.profile_h/2);
 	},
 
 	appendUserInfo: function(user, repos, title) {
+		
 		d3.select('#info_box')
 			.append('text')
 			.text(title)
@@ -209,22 +209,24 @@ var User = {
 	removeUserInfo: function() {
 		d3.select('#repos_count')
 			.transition()
-			.duration(400)
+			.duration(500)
+			.attr('y', 0)
 			.attr('opacity', 0)
 			.each('end', function(){
 				d3.select(this).remove();
 			});
 		d3.select('#lines_written')
 			.transition()
-			.duration(400)
+			.duration(500)
+			.attr('y', 0)
 			.attr('opacity', 0)
 			.each('end', function(){
 				d3.select(this).remove();
 			});
 		d3.select('#user_title')
 			.transition()
-			.duration(400)
-			.attr('y', User.profile_h/2)
+			.duration(500)
+			.attr('y', 0)
 			.attr('opacity', 0)
 			.each('end', function(){
 				d3.select(this)
