@@ -43,8 +43,9 @@ class Repo < ActiveRecord::Base
   end
 
   def getCollaborators(options = {})
+    user = User.find(self.user)
     collaborators = {}
-    result = JSON.parse(RestClient.get(options[:url] || self.collaborators_url, params: {access_token: ENV['ACCESS_TOKEN']}))
+    result = JSON.parse(RestClient.get(options[:url] || self.collaborators_url, params: {access_token: user.access_token}))
     result.each do |collaborator|
       collaborators[collaborator['login']] = collaborator['html_url']
     end
@@ -52,9 +53,10 @@ class Repo < ActiveRecord::Base
   end
 
   def getLinesOfCodeByLanguage(options = {})
+    user = User.find(self.user)
     linesByLanguage = {}
     percentByLanguage = {}
-    result = JSON.parse(RestClient.get(options[:url] || self.languages_url, params: {access_token: ENV['ACCESS_TOKEN']}))
+    result = JSON.parse(RestClient.get(options[:url] || self.languages_url, params: {access_token: user.access_token}))
     result.each do |language, lines|
       linesByLanguage[language] = lines
       percentByLanguage[language] = lines

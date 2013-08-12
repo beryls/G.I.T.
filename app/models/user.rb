@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 	def loadRepos
 		# result = Rails.cache.fetch("loadRepos-user-#{self.id}", expires_in: 1.hour) do
 			result = JSON.parse(RestClient.get('https://api.github.com/users/' + self.login + "/repos",
-				params: {access_token: ENV['ACCESS_TOKEN'], page: 1, per_page: 100}))
+				params: {access_token: self.access_token, page: 1, per_page: 100}))
 		# end
 		# Rails.cache.fetch("update-user-repos-#{self.id}", expires_in: 1.hour) do
 			result.each do |repo|
