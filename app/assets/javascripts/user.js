@@ -128,6 +128,7 @@ var User = {
 
 		User.removeUserInfo();
 		Repo.removeRepoInfo();
+		Graph.killRepoGraph();
 		
 		$('#profile_box')
 			.animate({

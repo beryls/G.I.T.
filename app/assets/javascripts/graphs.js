@@ -308,7 +308,7 @@ var Graph = {
                 .transition()
                 .duration(1000)
               .attr("fill", Repo.repoColor(Graph.hash_keys[this.id]))
-              .attr("d", arc.outerRadius(outerRadius))
+              .attr("d", arc.outerRadius(outerRadius));
               d3.selectAll(".percent-label").remove();
             });
           });
@@ -320,7 +320,7 @@ var Graph = {
     this.valueConvert();
 
     var h = 100,
-    	w = 290;
+			w = 290;
 
     svg = d3.select('#info_box')
 			.append('svg')
