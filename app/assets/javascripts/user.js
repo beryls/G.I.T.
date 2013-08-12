@@ -1,8 +1,8 @@
 var User = {
 
 	square: 60,
-	color: '#465b5e',
-	hover:'#5f7c81',
+	color: '#00ced1',
+	hover:'#88eeee',
 	profile_h: 240,
 	profile_w: 240,
 	profile_expand_w: 890,
@@ -12,7 +12,6 @@ var User = {
 
 		var user = $.parseJSON(user_json),
 			repos = $.parseJSON(repos_json),
-
 			title = function() {
 				if(user['name']) {
 					return user['name'];
@@ -82,7 +81,7 @@ var User = {
 					}
 				});
 			});
-		
+
 		// appends name or username to profile box
 		profile.append('text')
 			.text(title)

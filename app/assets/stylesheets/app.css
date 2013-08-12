@@ -30,11 +30,11 @@ a:link {text-decoration: none;}
 	z-index: -10;
 }
 
-#navbar{
+#navbar {
 	height: 60px;
 	padding-left: 20px;
 	text-align: center;
-	background: #465b5e;
+	background: #00ced1;
 	margin: 0 -1px 0 -1px;
 	position: relative;
 	z-index: 3;
@@ -47,7 +47,6 @@ a:link {text-decoration: none;}
 	font-size: 25px;
 	position: absolute;
 	font-family: 'Cabin Condensed', sans-serif;
-
 }
 
 .nav_button {
