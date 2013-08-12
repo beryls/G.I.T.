@@ -325,9 +325,9 @@ var Graph = {
     svg = d3.select('#info_box')
 			.append('svg')
 			.attr('id', 'repo_graph')
-			.attr('height', '400')
-			.attr('width', 400)
-			.attr('x', 290)
+			.attr('height', '100')
+			.attr('width', 290)
+			.attr('x', 300)
 			.attr('y', 140);
 
 		var xScale = d3.scale.ordinal()
