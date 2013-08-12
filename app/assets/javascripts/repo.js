@@ -56,13 +56,13 @@ var Repo = {
 					.each('end', function() {
 						Repo.removeRepoName();
 						Repo.removeRepoInfo();
+						Graph.killRepoGraph();
 						Repo.displayRepoInfo(this.__data__);
 					});
 				})
 				.on('mouseleave', function() {
 
 					Repo.removeRepoName();
-
 
 					d3.select(this)
 					.transition()
@@ -90,6 +90,7 @@ var Repo = {
 			info_box_w = 890,
 			collaborator_text = Repo.getObjSize(repo.collaborators);
 			language_text = Repo.getObjSize(repo.languages);
+
 		if(collaborator_text === 1) {
 			collaborator_text += ' Creator';
 		} else {
@@ -102,6 +103,7 @@ var Repo = {
 		}
 
 		User.removeUserInfo();
+		Graph.renderRepoGraph(repo.languages);
 
 		d3.select('#info_box')
 			.append('text')
@@ -116,7 +118,7 @@ var Repo = {
 			.transition()
 			.duration(800)
 			.attr('opacity', 1)
-			.attr('y', 70);
+			.attr('y', 40);
 
 		d3.select('#info_box')
 			.append('text')
@@ -131,7 +133,7 @@ var Repo = {
 			.transition()
 			.duration(800)
 			.attr('opacity', 1)
-			.attr('y', 160);
+			.attr('y', 130);
 
 		d3.select('#info_box')
 			.append('text')
@@ -146,7 +148,7 @@ var Repo = {
 			.transition()
 			.duration(800)
 			.attr('opacity', 1)
-			.attr('y', 130);
+			.attr('y', 100);
 
 		d3.select('#info_box')
 			.append('text')
@@ -161,7 +163,7 @@ var Repo = {
 			.transition()
 			.duration(800)
 			.attr('opacity', 1)
-			.attr('y', 100);
+			.attr('y', 70);
 	},
 
 	getObjSize: function(object) {

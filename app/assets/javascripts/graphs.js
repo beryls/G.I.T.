@@ -312,5 +312,134 @@ var Graph = {
               d3.selectAll(".percent-label").remove();
             });
           });
-  }
+  },
+
+  renderRepoGraph: function(languages) {
+		this.languages = languages;
+    this.setHashKeyPairs();
+    this.valueConvert();
+
+    var h = 100,
+    	w = 290;
+
+    svg = d3.select('#info_box')
+    	.append('svg')
+    	.attr('id', 'repo_graph')
+    	.attr('height', '400')
+    	.attr('width', 400)
+    	.attr('x', 290)
+    	.attr('y', 140);
+
+		var xScale = d3.scale.ordinal()
+			.domain(d3.range(Graph.hash_values.length))
+			.rangeRoundBands([10, w - 10], 1/(Graph.hash_values.length * 0.5));
+
+		var exp_calc = 1/(Math.log(d3.max(this.hash_ints))/Math.log(100));
+
+		var yScale = d3.scale.pow().exponent(exp_calc)
+			.range([0, 1]);
+
+		svg.selectAll("rect")
+		.data(Graph.hash_values)
+		.enter()
+		.append("rect")
+		.attr('class', 'bar')
+		.attr("x", function(d, i) {
+			return xScale(i);
+		})
+		.attr('y', h)
+		.attr("width", function() {
+			return xScale.rangeBand();
+		})
+		.attr('height', 0)
+		.attr('id', function(d, i) {
+			return i;
+		})
+		.attr("fill", function(d, i) {
+			return Repo.repoColor(Graph.hash_keys[i]);
+		})
+		.transition()
+		.delay(function(d, i){
+			return 500 + 100 * i;
+		})
+		.duration(1000)
+		.attr("height", function(d) {
+			return yScale(d);
+		})
+		.attr("y", function(d) {
+			return h - yScale(d);
+		})
+		.each('end', function(){
+			d3.select(this)
+			.on('mouseenter', function() {
+					d3.select(this)
+						.transition()
+						.duration(100)
+						.attr('fill', function() {
+							return Repo.repoHover(Graph.hash_keys[this.id]);
+						});
+						svg.append("text")
+						.text(Graph.hash_keys[this.id])
+						.attr("text-anchor", "middle")
+						.attr("x", xScale(this.id) + xScale.rangeBand() / 2)
+						.attr("y", h - yScale(Graph.hash_values[this.id]) - 25)
+						.attr("font-family", "sans-serif")
+						.attr("font-size", 10)
+						.attr("fill", "black")
+						.attr('opacity', 0)
+						.attr('class', 'bar_label')
+						.transition()
+						.duration(250)
+						.attr('opacity', 1);
+
+						svg.append("text")
+						.text(Graph.hash_values[this.id] + ' Btyes')
+						.attr("text-anchor", "middle")
+						.attr("x", xScale(this.id) + xScale.rangeBand() / 2)
+						.attr("y", h - yScale(Graph.hash_values[this.id]) - 5)
+						.attr("font-family", "sans-serif")
+						.attr("font-size", 10)
+						.attr("fill", "black")
+						.attr('opacity', 0)
+						.attr('class', 'bar_label')
+						.transition()
+						.duration(250)
+						.attr('opacity', 1);
+
+				});
+				d3.select(this)
+				.on("mouseleave", function() {
+					d3.select(this)
+					.transition()
+					.duration(1000)
+					.attr("fill", function(d, i) {
+						return Repo.repoColor(Graph.hash_keys[this.id]);
+					});
+					d3.selectAll('.bar_label')
+						.transition()
+						.duration(500)
+						.attr('opacity', 0)
+						.each('end', function() {
+							d3.select(this)
+								.remove();
+						});
+				});
+			});
+  },
+
+
+  killRepoGraph: function(){
+		d3.select('#repo_graph')
+		.transition()
+		.duration(400)
+		.attr('height', 0)
+		.attr('opacity', 0)
+		.each('end', function() {
+			d3.select(this)
+			.remove();
+		});
+		this.hash_keys = [];
+		this.hash_values = [];
+	}
+
 };
