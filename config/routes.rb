@@ -7,6 +7,7 @@ GIT::Application.routes.draw do
   get '/users/create' => 'users#create', as: 'create_user'
   get '/users/:id' => 'users#show', as: 'user'
   get '/select/:login' => 'welcome#select', as: 'select'
+  get '/about' => 'welcome#about', as: 'about'
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

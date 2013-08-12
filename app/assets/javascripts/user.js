@@ -5,8 +5,8 @@ var User = {
 		var user = $.parseJSON(user_json),
 			repos = $.parseJSON(repos_json),
 			square = 60,
-			color = '#465b5e',
-			hover = '#5f7c81',
+			color = '#00ced1',
+			hover = '#88eeee',
 			profile_h = 240,
 			profile_w = 240,
 			title = function() {
@@ -128,7 +128,7 @@ var User = {
 					}
 				});
 			});
-		
+
 		// appends name or username to profile box
 		profile.append('text')
 			.text(title)
@@ -144,6 +144,6 @@ var User = {
 			.attr('opacity', 1)
 			.attr('y', profile_h/2);
 
-		Graph.renderGraphs(user['lines_by_language']);			
+		Graph.renderGraphs(user['lines_by_language']);
 	},
 };
