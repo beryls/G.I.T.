@@ -62,7 +62,7 @@ var Repo = {
 				.on('mouseleave', function() {
 
 					Repo.removeRepoName();
-					
+
 
 					d3.select(this)
 					.transition()
@@ -258,8 +258,8 @@ var Repo = {
 	},
 
 	repoColor: function(lang) {
-		if(lang === "Ruby") {return '#722124';}
-		if(lang === 'JavaScript') {return '#3aa0a0';}
+		if(lang === "Ruby") {return '#992124';}
+		if(lang === 'JavaScript') {return '#3acca0';}
 		if(lang === 'C++') {return '#624588';}
 		else {
 			return generateStringColor(lang);
@@ -268,7 +268,7 @@ var Repo = {
 
 	repoHover: function(lang) {
 		if(lang === "Ruby") {return '#ca2830';}
-		if(lang === 'JavaScript') {return '#47c4c4';}
+		if(lang === 'JavaScript') {return '#47ddc4';}
 		if(lang === 'C++') {return '#8e65c5';}
 		else {
 			return generateStringHover(lang);
