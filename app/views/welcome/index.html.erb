@@ -1,4 +1,6 @@
 <div id = "search">
+  <h1 style="font-family: Yesteryear; font-size: 50px"> Github. Visualized. </h1>
+  <br/>
   <%= form_tag root_path, method: 'get' do %>
     <p>
       <%= text_field_tag :q, params[:q], {placeholder: 'Find a Github User', id: 'search_field'}%>

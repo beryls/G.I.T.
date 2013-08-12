@@ -12,6 +12,8 @@ class Repo < ActiveRecord::Base
   # allows for mass assignment of these attributes
   attr_accessible :name, :html_url, :collaborators, :languages, :collaborators_url, :languages_url, :homepage_url, :percent_languages, :main_language
 
+
+  # Either creates or updates a repo based on info
   def self.updateOrCreate(info)
     if(Repo.find_by_html_url(info[:html_url]))
       repo = Repo.find_by_html_url(info[:html_url])
@@ -19,13 +21,14 @@ class Repo < ActiveRecord::Base
     else
       repo = Repo.create(info)
     end
-      repo.getLinesOfCodeByLanguage
+      repo.getBytesOfCode
       repo.getCollaborators
-      repo.linesOfCode
+      repo.bytesOfCode
       return repo
   end
 
-  def linesOfCode
+  # sets totaly bytes of code in the repo
+  def bytesOfCode
     total_lines = 0
     self.languages.each do |language, lines|
       total_lines += lines.to_i
@@ -35,7 +38,7 @@ class Repo < ActiveRecord::Base
 
   def percentOfCodeByLanguage
     percent = {}
-    totalLines = linesOfCode.to_f
+    totalLines = bytesOfCode.to_f
     self.languages.each do |language, lines|
       percent[languages] = (100*lines.to_f/totalLines).round(2)
     end
@@ -51,7 +54,7 @@ class Repo < ActiveRecord::Base
     self.collaborators = collaborators
   end
 
-  def getLinesOfCodeByLanguage(options = {}) 
+  def getBytesOfCode(options = {}) 
     linesByLanguage = {}
     percentByLanguage = {}
     result = JSON.parse(RestClient.get(options[:url] || self.languages_url, params: {access_token: ENV['ACCESS_TOKEN']}))

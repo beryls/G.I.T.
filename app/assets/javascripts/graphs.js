@@ -25,6 +25,8 @@ var Graph = {
 
 	renderGraphs: function(user_languages) {
 
+		console.log(user_languages);
+
 		$('<div>').css('height', 310)
 			.css('width', 1000)
 			.attr('id', 'graphs_container')
@@ -69,11 +71,7 @@ var Graph = {
 			.domain(d3.range(Graph.hash_values.length))
 			.rangeRoundBands([40, w - 40], 1/(Graph.hash_values.length * 0.5));
 
-		console.log(d3.max(this.hash_ints));
-
 		var exp_calc = 1/(Math.log(d3.max(this.hash_ints))/Math.log(250));
-
-		console.log(exp_calc);
 
 		var yScale = d3.scale.pow().exponent(exp_calc)
 			.range([0, 1]);
@@ -283,15 +281,13 @@ var Graph = {
               .attr("fill", Repo.repoHover(Graph.hash_keys[this.id]))
               .attr("d", arc.outerRadius(outerRadius + 10))
               arcs.append("text")
-              .attr("transform", function()
-                {
-                    var c = arc.centroid(d);
-                    var x = c[0];
-                    var y = c[1];
-                    var dist = Math.sqrt(x*x + y*y);
-                    return "translate(" + (x/dist * (outerRadius + 15)) +  ',' + (y/dist * (outerRadius + 15)) +  ")";
-                }
-            	)
+              .attr("transform", function() {
+                var c = arc.centroid(d);
+                var x = c[0];
+                var y = c[1];
+                var dist = Math.sqrt(x*x + y*y);
+                return "translate(" + (x/dist * (outerRadius + 15)) +  ',' + (y/dist * (outerRadius + 15)) +  ")";
+               })
             	.attr('opacity', 0)
               .attr("text-anchor", "middle")
               .attr("class", "percent-label")
