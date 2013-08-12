@@ -140,7 +140,7 @@ var Graph = {
 						.attr('opacity', 1);
 
 						svg.append("text")
-						.text(Graph.hash_values[this.id] + ' Btyes')
+						.text(Graph.hash_values[this.id] + ' Bytes')
 						.attr("text-anchor", "middle")
 						.attr("x", xScale(this.id) + xScale.rangeBand() / 2)
 						.attr("y", h - yScale(Graph.hash_values[this.id]) - 5)
