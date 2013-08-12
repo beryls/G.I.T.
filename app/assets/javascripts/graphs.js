@@ -323,16 +323,16 @@ var Graph = {
     	w = 290;
 
     svg = d3.select('#info_box')
-    	.append('svg')
-    	.attr('id', 'repo_graph')
-    	.attr('height', '400')
-    	.attr('width', 400)
-    	.attr('x', 290)
-    	.attr('y', 140);
+			.append('svg')
+			.attr('id', 'repo_graph')
+			.attr('height', '400')
+			.attr('width', 400)
+			.attr('x', 290)
+			.attr('y', 140);
 
 		var xScale = d3.scale.ordinal()
 			.domain(d3.range(Graph.hash_values.length))
-			.rangeRoundBands([10, w - 10], 1/(Graph.hash_values.length * 0.5));
+			.rangeRoundBands([10, w - 10], 1/(Graph.hash_values.length));
 
 		var exp_calc = 1/(Math.log(d3.max(this.hash_ints))/Math.log(100));
 
