@@ -4,9 +4,3 @@ An app that will transform the way you show your work.
 
 Git It Together will pull from your github account to create a customizable portfolio
 with an awesome layout. Check back soon for more information.  
-
-Redis
-===
-brew install redis
-redis-server (in another tab)
-redis-cli monitor (in yet another tab)
