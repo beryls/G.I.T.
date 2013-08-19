@@ -13,7 +13,7 @@ class WelcomeController < ApplicationController
   end
 
   def select
-    # expires_in 3.minutes, public: true
+    expires_in 3.minutes, public: true
     login = params[:login]
     # user = Rails.cache.fetch("search-result-#{params[:login]}", expires_in: 1.hour) do
     user = JSON.parse(RestClient.get("https://api.github.com/users/#{login}", {:params => {:access_token => current_user.access_token}}))  
