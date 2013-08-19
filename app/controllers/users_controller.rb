@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
 	def callback
+    expires_in 3.minutes, public: true
   	result = RestClient.post("https://github.com/login/oauth/access_token",
 	    {client_id: ENV['CLIENT_ID'],
 	     client_secret: ENV['CLIENT_SECRET'],

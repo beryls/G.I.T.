@@ -59,6 +59,12 @@ group :development, :test do
 end
 
 
+
+gem 'memcachier'
+gem 'rack-cache'
+gem 'dalli'
+gem 'kgio'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

@@ -52,6 +52,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     columnize (0.3.6)
+    dalli (2.6.4)
     debug_inspector (0.0.2)
     debugger (1.6.1)
       columnize (>= 0.3.1)
@@ -73,9 +74,11 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)
+    kgio (2.8.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     meta_request (0.2.7)
       callsite
       rack-contrib
@@ -178,9 +181,12 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   coffee-rails (~> 3.2.1)
+  dalli
   dotenv
   dotenv-rails
   jquery-rails
+  kgio
+  memcachier
   meta_request
   pg
   pry-debugger
@@ -188,6 +194,7 @@ DEPENDENCIES
   pry-stack_explorer
   puma
   quiet_assets
+  rack-cache
   rails (= 3.2.13)
   rails-erd
   rest-client
