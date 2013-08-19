@@ -7,6 +7,8 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 
+gem 'puma'
+
 gem 'activerecord-postgres-hstore'
 
 gem 'rest-client'
