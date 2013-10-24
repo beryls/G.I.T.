@@ -5,15 +5,15 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  database: git_dev
+  database: git_new_dev
   host: localhost
 
 test:
   adapter: postgresql
-  database: git_test
+  database: git_new_test
   host: localhost
 
 production:
   adapter: postgresql
-  database: git_dev
+  database: git_new_dev
   host: localhost
