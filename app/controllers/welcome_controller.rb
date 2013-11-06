@@ -6,7 +6,8 @@ class WelcomeController < ApplicationController
       @@access_token = current_user.access_token
       if params[:q]
         @search = URI.encode(params[:q])
-        @results = RestClient.get("https://api.github.com/legacy/user/search/#{@search}+in%3Aname+in%3Alogin&type=Users&ref=searchresults", {params: {access_token: current_user.access_token}})
+        # @results = RestClient.get("https://api.github.com/legacy/user/search/#{@search}+in%3Aname+in%3Alogin&type=Users&ref=searchresults", {params: {access_token: current_user.access_token}})
+        @results = RestClient.get("https://api.github.com/search/users?q=#{@search}+in%3Ausername+in%3Aname", {params: {access_token: current_user.access_token}})
         @results = JSON.parse(@results)
       end
     end
@@ -16,7 +17,7 @@ class WelcomeController < ApplicationController
     # expires_in 3.minutes, public: true
     login = params[:login]
     # user = Rails.cache.fetch("search-result-#{params[:login]}", expires_in: 1.hour) do
-    user = JSON.parse(RestClient.get("https://api.github.com/users/#{login}", {:params => {:access_token => current_user.access_token}}))  
+    user = JSON.parse(RestClient.get("https://api.github.com/users/#{login}", {:params => {:access_token => current_user.access_token}}))
     # end
 
     user_info = {name: user['name'],

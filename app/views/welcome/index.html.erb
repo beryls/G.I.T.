@@ -12,11 +12,11 @@
 <div id = "search_results">
 <% if current_user %>
   <% if params[:q] %>
-    <% if @results["users"].length == 0 %>
+    <% if @results["items"].length == 0 %>
       <h3>No results returned.</h3>
     <% else %>
       <p>Search results for: <%= @search %></p>
-      <% @results["users"].each do |result| %>
+      <% @results["items"].each do |result| %>
         <p><%= link_to '/select/' + result['login'], method: 'get' do %>
           <%= result["login"] %>
           <% if result["name"] %>
