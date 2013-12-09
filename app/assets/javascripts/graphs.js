@@ -25,7 +25,7 @@ var Graph = {
 
 	renderGraphs: function(user_languages) {
 
-		console.log(user_languages);
+		// console.log(user_languages);
 
 		$('<div>').css('height', 310)
 			.css('width', 1000)
@@ -254,7 +254,7 @@ var Graph = {
             .enter()
             .append("g")
             .attr("class", "arc")
-            .attr("transform", "translate(" + w/2 + "," + h/2 + ")")
+            .attr("transform", "translate(" + w/2 + "," + h/2 + ")");
 
 
     //Draw arc paths
@@ -264,7 +264,7 @@ var Graph = {
         })
         .attr("d", arcStart)
         .attr("id", function(d, i) {
-          return i
+          return i;
         })
         .transition()
          .delay(function(d, i) {
@@ -279,7 +279,7 @@ var Graph = {
               .transition()
               .duration(500)
               .attr("fill", Repo.repoHover(Graph.hash_keys[this.id]))
-              .attr("d", arc.outerRadius(outerRadius + 10))
+              .attr("d", arc.outerRadius(outerRadius + 10));
               arcs.append("text")
               .attr("transform", function() {
                 var c = arc.centroid(d);
@@ -287,7 +287,8 @@ var Graph = {
                 var y = c[1];
                 var dist = Math.sqrt(x*x + y*y);
                 return "translate(" + (x/dist * (outerRadius + 15)) +  ',' + (y/dist * (outerRadius + 15)) +  ")";
-               })
+              })
+              .transition()
             	.attr('opacity', 0)
               .attr("text-anchor", "middle")
               .attr("class", "percent-label")
@@ -296,16 +297,16 @@ var Graph = {
 							.attr("font-size", "18")
 							.attr("fill", "black")
 							.transition()
-							.duration(3000)
+							.duration(2000)
 							.attr('opacity', 3/Graph.hash_keys.length);
 							})
            .on("mouseout", function(d, i) {
+             d3.selectAll(".percent-label").remove();
              d3.select(this)
-                .transition()
-                .duration(1000)
+              .transition()
+              .duration(1000)
               .attr("fill", Repo.repoColor(Graph.hash_keys[this.id]))
               .attr("d", arc.outerRadius(outerRadius));
-              d3.selectAll(".percent-label").remove();
             });
           });
   },
@@ -434,8 +435,6 @@ var Graph = {
 			d3.select(this)
 			.remove();
 		});
-		this.hash_keys = [];
-		this.hash_values = [];
 	}
 
 };
