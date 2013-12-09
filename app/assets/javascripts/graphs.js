@@ -278,8 +278,6 @@ var Graph = {
          .each("end", function() {
            d3.select(this)
            .on("mouseenter", function(d, i) {
-            console.log(Graph.total_bytes);
-            console.log(Graph.hash_keys[this.id] + ": " + (d.value/Graph.total_bytes * 100).toFixed(2) + "%");
              d3.select(this)
               .transition()
               .duration(500)
