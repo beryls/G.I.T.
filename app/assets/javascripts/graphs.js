@@ -7,6 +7,8 @@ var Graph = {
   total_bytes: 0,
 
   setHashKeyPairs: function() {
+    this.hash_keys = [];
+    this.hash_values = [];
 		for (var key in this.languages) {
 			this.hash_keys.push(key);
 			this.hash_values.push(this.languages[key]);
@@ -15,11 +17,11 @@ var Graph = {
 
   valueConvert: function() {
 		hash_ints = [];
-		total_bytes = 0;
+		this.total_bytes = 0;
 		for (i = 0; i < this.hash_values.length; i++) {
 			var bytes = parseInt(this.hash_values[i]);
-			Graph.hash_ints.push(bytes);
-			Graph.total_bytes += bytes;
+			this.hash_ints.push(bytes);
+			this.total_bytes += bytes;
 		}
 	},
 
@@ -276,6 +278,8 @@ var Graph = {
          .each("end", function() {
            d3.select(this)
            .on("mouseenter", function(d, i) {
+            console.log(Graph.total_bytes);
+            console.log(Graph.hash_keys[this.id] + ": " + (d.value/Graph.total_bytes * 100).toFixed(2) + "%");
              d3.select(this)
               .transition()
               .duration(500)
@@ -436,6 +440,6 @@ var Graph = {
 			d3.select(this)
 			.remove();
 		});
+    this.languages = {};
 	}
-
 };
