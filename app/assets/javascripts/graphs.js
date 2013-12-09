@@ -204,6 +204,7 @@ var Graph = {
 
 		this.hash_keys = [];
 		this.hash_values = [];
+    this.total_bytes = 0;
 	},
 
 
